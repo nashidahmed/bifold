@@ -5,21 +5,21 @@ import { useIsFocused } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  SafeAreaView,
-  View,
-  Text,
-  Pressable,
-  Switch,
-  FlatList,
-  StyleSheet,
-  NativeEventEmitter,
-  NativeModules,
   Alert,
   AppState,
   AppStateStatus,
+  FlatList,
+  NativeEventEmitter,
+  NativeModules,
+  Pressable,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
 } from 'react-native'
 import BleManager from 'react-native-ble-manager'
 
+import { SafeAreaView } from 'react-native-safe-area-context'
 import ButtonLoading from '../../components/animated/ButtonLoading'
 import ConnectionLoading from '../../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../../components/buttons/Button'
@@ -27,7 +27,7 @@ import { domain } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { useConnectionByOutOfBandId } from '../../hooks/connections'
 import { ScanProps } from '../../screens/Scan'
-import { Stacks, Screens } from '../../types/navigators'
+import { Screens, Stacks } from '../../types/navigators'
 import { createConnectionInvitation, stringToBytes } from '../../utils/helpers'
 import { handleInvitation } from '../../utils/invitation'
 import { testIdWithKey } from '../../utils/testable'
@@ -295,7 +295,7 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     )
   } else {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
         <View
           style={{
             flexDirection: 'row',

@@ -96,7 +96,7 @@ const ScanBLE: React.FC<ScanProps> = ({ navigation, route }) => {
         setDisclosureType(isAndroid12OrAbove ? 'NearbyDevicesDisclosure' : 'LocationDisclosure')
         await multiplePermissionFlow(checkMultiple, permissions)
       } else if (Platform.OS === 'ios') {
-        await permissionFlow(check, PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL)
+        await permissionFlow(check, PERMISSIONS.IOS.BLUETOOTH)
       }
       setLoading(false)
     }
@@ -116,7 +116,7 @@ const ScanBLE: React.FC<ScanProps> = ({ navigation, route }) => {
 
       return await multiplePermissionFlow(requestMultiple, permissions, rationale)
     } else if (Platform.OS === 'ios') {
-      return await permissionFlow(request, PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL, rationale)
+      return await permissionFlow(request, PERMISSIONS.IOS.BLUETOOTH, rationale)
     }
 
     return false
