@@ -175,6 +175,12 @@ const translation = {
     "ToContinueUsing": "Para continuar usando a funcionalidade de scan da FHWA, favor permitir o uso da câmera.",
     "OpenSettings": "Abrir as configurações",
   },
+  "BluetoothDisclosure": {
+    "AllowUse": "Allow bluetooth use",
+    "Disclosure": "The bluetooth is used to search and connect with other devices.",
+    "ToContinueUsing": "To continue using the FHWA bluetooth feature, please allow bluetooth permissions.",
+    "OpenSettings": "Open settings",
+  },
   "PINCreate": {
     "Message": {
       "CrossPatternValidation": "Um padrão de X foi detectado no seu PIN. Favor tentar novamente.",

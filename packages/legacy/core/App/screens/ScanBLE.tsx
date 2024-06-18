@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { PERMISSIONS, Permission, RESULTS, Rationale, checkMultiple, requestMultiple } from 'react-native-permissions'
@@ -16,9 +16,11 @@ import { ScanProps } from './Scan'
 const ScanBLE: React.FC<ScanProps> = ({ navigation, route }) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [showDisclosureModal, setShowDisclosureModal] = useState<boolean>(true)
-  const [disclosureType, setDisclosureType] = useState<DisclosureTypes>('NearbyDevicesDisclosure')
+  const [disclosureType, setDisclosureType] = useState<DisclosureTypes>(
+    Platform.OS === 'android' ? 'NearbyDevicesDisclosure' : 'BluetoothDisclosure'
+  )
   const { t } = useTranslation()
-  
+
   const permissionFlow = async (
     method: MultiplePermissionContract,
     permission: Permission[],
@@ -72,7 +74,7 @@ const ScanBLE: React.FC<ScanProps> = ({ navigation, route }) => {
 
   const requestBLEUse = async (rationale?: Rationale): Promise<boolean> => {
     if (Platform.OS === 'android') {
-      const isAndroid12OrAbove = Platform.Version >= 31
+      // const isAndroid12OrAbove = Platform.Version >= 31
 
       const permissions = [
         PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
