@@ -12,7 +12,11 @@ import Button, { ButtonType } from '../buttons/Button'
 
 import DismissiblePopupModal from './DismissiblePopupModal'
 
-export type DisclosureTypes = 'CameraDisclosure' | 'NearbyDevicesDisclosure' | 'LocationDisclosure'
+export type DisclosureTypes =
+  | 'CameraDisclosure'
+  | 'NearbyDevicesDisclosure'
+  | 'LocationDisclosure'
+  | 'BluetoothDisclosure'
 
 interface PermissionDisclosureModalProps {
   type: DisclosureTypes

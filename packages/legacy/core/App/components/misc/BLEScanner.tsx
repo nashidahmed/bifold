@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-import React from 'react'
 import { DidExchangeState } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { useIsFocused } from '@react-navigation/native'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   SafeAreaView,
@@ -76,6 +75,7 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
   const [discoverable, setDiscoverable] = useState<boolean>()
   const [isBluetoothEnabled, setIsBluetoothEnabled] = useState<boolean>(false)
   const [appState, setAppState] = useState(AppState.currentState)
+  const [connectedDeviceId, setConnectedDeviceId] = useState<string>()
   const { ColorPallet, TextTheme } = useTheme()
   const bleManagerModule = NativeModules.BleManager
   const bleManagerEmitter = new NativeEventEmitter(bleManagerModule)
@@ -136,6 +136,18 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     }
   }
 
+  const disconnectDevice = (deviceId: string) => {
+    BleManager.disconnect(deviceId)
+      .then(() => {
+        // Success code
+        console.log('Disconnected')
+      })
+      .catch((error) => {
+        // Failure code
+        console.log(error)
+      })
+  }
+
   useEffect(() => {
     BleManager.start({ showAlert: false }).catch((error) => {
       console.error('BleManager initialization error:', error)
@@ -151,10 +163,7 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     const readListener = bleAdvertiseEmitter.addListener('onRead', handleRead)
     BleManager.checkState()
 
-    console.log("Added listeners")
-
     return () => {
-      console.log("Removed listeners")
       updateListener.remove()
       stopListener.remove()
       discoverListener.remove()
@@ -175,7 +184,6 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
   // When app is pushed to the background, stop advertising
   useEffect(() => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
-      console.log("stop from app state change")
       if (nextAppState.match(/inactive|background/)) {
         stopAdvertising()
       }
@@ -191,9 +199,9 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
 
   // When screen is unfocused, stop advertising
   useEffect(() => {
-    console.log("Stop from is focus")
     if (!isFocused) {
       stopAdvertising()
+      connectedDeviceId && disconnectDevice(connectedDeviceId)
     }
   }, [isFocused])
 
@@ -216,18 +224,6 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     return result.record.outOfBandInvitation.toUrl({ domain }) + '\n' // Add delimiter \n to detect completion in bluetooth send
   }
 
-  const disconnectDevice = (deviceId: string) => {
-    BleManager.disconnect(deviceId)
-      .then(() => {
-        // Success code
-        console.log('Disconnected')
-      })
-      .catch((error) => {
-        // Failure code
-        console.log(error)
-      })
-  }
-
   const sendInvitation = async (deviceId: string) => {
     const invitationURL = await createInvitation()
 
@@ -243,6 +239,7 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
 
   const connectToDevice = (deviceId: string) => {
     setIsConnecting(true)
+    setConnectedDeviceId(deviceId)
     BleManager.connect(deviceId)
       .then(async () => {
         console.log('Connected to', deviceId)
@@ -251,9 +248,6 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
       .then(async (peripheralInfo) => {
         console.log('Peripheral info:', peripheralInfo)
         return sendInvitation(deviceId)
-      })
-      .then(() => {
-        disconnectDevice(deviceId)
       })
       .catch((err: any) => {
         setIsConnecting(false)

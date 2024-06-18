@@ -181,6 +181,12 @@ const translation = {
         "ToContinueUsing": "Pour continuer à utiliser la fonction de balayage du Portefeuille QC, autoriser l'utilisation de caméra.",
         "OpenSettings": "Ourvir Paramètres",
     },
+    "BluetoothDisclosure": {
+        "AllowUse": "Allow bluetooth use",
+        "Disclosure": "The bluetooth is used to search and connect with other devices.",
+        "ToContinueUsing": "To continue using the FHWA bluetooth feature, please allow bluetooth permissions.",
+        "OpenSettings": "Open settings",
+    },
     "PINCreate": {
         "Message": {
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
