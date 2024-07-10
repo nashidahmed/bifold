@@ -238,6 +238,8 @@ const translation = {
     "ScanBLE": {
         "BluetoothText": "Please turn on Bluetooth to continue.",
         "Text1": "Assurez-vous que Bluetooth est activé sur les deux appareils. Utilisez le bouton ci-dessous pour rechercher les appareils disponibles et envoyer une invitation à vous connecter.",
+        "Text2": "Appareils disponibles",
+        "Text3": "Aucun périphérique trouvé",
         "Toggle": "Activer/Désactiver la découverte Bluetooth",
         "ScanDevices": "Rechercher des appareils",
         "MakeDiscoverable": "Rendre visible"

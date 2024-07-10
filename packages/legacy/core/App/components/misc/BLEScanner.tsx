@@ -5,11 +5,8 @@ import { useIsFocused } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  SafeAreaView,
   View,
   Text,
-  Pressable,
-  Switch,
   FlatList,
   StyleSheet,
   NativeEventEmitter,
@@ -19,6 +16,7 @@ import {
   AppStateStatus,
 } from 'react-native'
 import BleManager from 'react-native-ble-manager'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ButtonLoading from '../../components/animated/ButtonLoading'
 import ConnectionLoading from '../../components/animated/ConnectionLoading'
@@ -30,7 +28,6 @@ import { ScanProps } from '../../screens/Scan'
 import { Stacks, Screens } from '../../types/navigators'
 import { createConnectionInvitation, stringToBytes } from '../../utils/helpers'
 import { handleInvitation } from '../../utils/invitation'
-import { testIdWithKey } from '../../utils/testable'
 
 const { BleAdvertise } = NativeModules
 
@@ -68,15 +65,14 @@ const styles = StyleSheet.create({
 })
 
 const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
-  const [isScanning, setIsScanning] = useState(false)
+  const [isScanning, setIsScanning] = useState(true)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
   const [devices, setDevices] = useState<LocalDevice[]>([])
   const [isConnecting, setIsConnecting] = useState<boolean>(false)
-  const [discoverable, setDiscoverable] = useState<boolean>()
   const [isBluetoothEnabled, setIsBluetoothEnabled] = useState<boolean>(false)
   const [appState, setAppState] = useState(AppState.currentState)
   const [connectedDeviceId, setConnectedDeviceId] = useState<string>()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { TextTheme } = useTheme()
   const bleManagerModule = NativeModules.BleManager
   const bleManagerEmitter = new NativeEventEmitter(bleManagerModule)
   const bleAdvertiseEmitter = new NativeEventEmitter(NativeModules.BleAdvertise)
@@ -125,15 +121,42 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     }
   }
 
+  const startAdvertising = async () => {
+    try {
+      BleAdvertise.broadcast(uuid, cuuid, {})
+        .then((success: any) => {
+          console.log(success)
+        })
+        .catch((error: string) => {
+          console.log('broadcast failed with: ' + error)
+        })
+    } catch (error) {
+      console.log('Broadcast failed with: ' + error)
+      Alert.alert('Broadcast Failed', `Failed to start broadcasting: ${error}`)
+    }
+  }
+
   // Stop advertising BLE
   const stopAdvertising = async () => {
-    setDiscoverable(false)
     try {
       await BleAdvertise.stopBroadcast()
       console.log('Stopped advertising')
     } catch (error) {
       console.error('Failed to stop advertising:', error)
     }
+  }
+
+  // Scan for other BLE connections, use a custom UUID so only devices advertising through the app are visible.
+  const startScan = async () => {
+    setDevices([]) // Clear devices list before scanning
+    BleManager.scan([uuid], 10, true)
+      .then(() => {
+        setIsScanning(true)
+      })
+      .catch((err: any) => {
+        console.error('Scan failed', err)
+        setIsScanning(false)
+      })
   }
 
   const disconnectDevice = (deviceId: string) => {
@@ -162,6 +185,8 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     const discoverListener = bleManagerEmitter.addListener('BleManagerDiscoverPeripheral', handleDiscoverPeripheral)
     const readListener = bleAdvertiseEmitter.addListener('onRead', handleRead)
     BleManager.checkState()
+    startAdvertising()
+    startScan()
 
     return () => {
       updateListener.remove()
@@ -186,6 +211,8 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
       if (nextAppState.match(/inactive|background/)) {
         stopAdvertising()
+      } else {
+        startAdvertising()
       }
       setAppState(nextAppState)
     }
@@ -202,21 +229,10 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     if (!isFocused) {
       stopAdvertising()
       connectedDeviceId && disconnectDevice(connectedDeviceId)
+    } else {
+      startAdvertising()
     }
   }, [isFocused])
-
-  // Scan for other BLE connections, use a custom UUID so only devices advertising through the app are visible.
-  const startScan = async () => {
-    setDevices([]) // Clear devices list before scanning
-    BleManager.scan([uuid], 10, true)
-      .then(() => {
-        setIsScanning(true)
-      })
-      .catch((err: any) => {
-        console.error('Scan failed', err)
-        setIsScanning(false)
-      })
-  }
 
   const createInvitation = async (): Promise<string> => {
     const result = await createConnectionInvitation(agent)
@@ -256,22 +272,6 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
       })
   }
 
-  const startAdvertising = async () => {
-    setDiscoverable(true)
-    try {
-      BleAdvertise.broadcast(uuid, cuuid, {})
-        .then((success: any) => {
-          console.log(success)
-        })
-        .catch((error: string) => {
-          console.log('broadcast failed with: ' + error)
-        })
-    } catch (error) {
-      console.log('Broadcast failed with: ' + error)
-      Alert.alert('Broadcast Failed', `Failed to start broadcasting: ${error}`)
-    }
-  }
-
   const renderItem = ({ item }: { item: LocalDevice }) => (
     <View style={styles.device}>
       <Text style={[TextTheme.title]}>{item.name}</Text>
@@ -295,39 +295,18 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     )
   } else {
     return (
-      <SafeAreaView style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 20,
-          }}
-        >
-          <View style={{ flexShrink: 1, marginRight: 10, justifyContent: 'center' }}>
-            <Text style={[TextTheme.bold]}>{t('ScanBLE.MakeDiscoverable')}</Text>
-          </View>
-          <View style={{ justifyContent: 'center' }}>
-            <Pressable
-              testID={testIdWithKey('ToggleBluetooth')}
-              accessible
-              accessibilityLabel={t('ScanBLE.Toggle')}
-              accessibilityRole={'switch'}
-            >
-              <Switch
-                trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-                thumbColor={discoverable ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-                ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-                onValueChange={(value) => (value ? startAdvertising() : stopAdvertising())}
-                value={discoverable}
-                // disabled={!biometryAvailable}
-              />
-            </Pressable>
-          </View>
-        </View>
+      <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
         <View style={{ marginBottom: 10 }}>
           <Text style={[TextTheme.normal]}>{t('ScanBLE.Text1')}</Text>
         </View>
-        {!isScanning && devices.length === 0 && <Text style={styles.noDevicesText}>No devices found.</Text>}
+        <View style={{ marginBottom: 10 }}>
+          <Text style={[TextTheme.label]}>{t('ScanBLE.Text2')}</Text>
+        </View>
+        {!isScanning && devices.length === 0 && (
+          <View style={{ marginBottom: 10 }}>
+            <Text style={[TextTheme.labelSubtitle, styles.noDevicesText]}>{t('ScanBLE.Text3')}</Text>
+          </View>
+        )}
         <FlatList data={devices} renderItem={renderItem} keyExtractor={(item) => item.id} />
         <Button
           title={t('ScanBLE.ScanDevices')}

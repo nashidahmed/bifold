@@ -240,6 +240,8 @@ const translation = {
     "Connect": "Connect",
     "BluetoothText": "Please turn on Bluetooth to continue.",
     "Text1": "Ensure Bluetooth is enabled on both devices. Use the button below to scan for available devices and send and invitation to connect.",
+    "Text2": "Available Devices",
+    "Text3": "No devices found",
     "Toggle": "Toggle Bluetooth discovery",
     "ScanDevices": "Scan for devices",
     "MakeDiscoverable": "Make Discoverable"
