@@ -62,6 +62,10 @@ export const defaultState: State = {
     activeDeepLink: '',
   },
   loading: false,
+  agent: {
+    infrastructure: [],
+    ca: [],
+  },
 }
 
 export const StoreContext = createContext<[State, Dispatch<ReducerAction<any>>]>([
