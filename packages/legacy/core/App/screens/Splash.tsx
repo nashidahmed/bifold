@@ -22,6 +22,7 @@ import { Screens, Stacks } from '../types/navigators'
 import {
   LoginAttempt as LoginAttemptState,
   Migration as MigrationState,
+  Agent as AgentState,
   Preferences as PreferencesState,
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
@@ -141,6 +142,16 @@ const Splash: React.FC = () => {
 
           dispatch({
             type: DispatchAction.MIGRATION_UPDATED,
+            payload: [dataAsJSON],
+          })
+        }
+
+        const agentData = await AsyncStorage.getItem(LocalStorageKeys.Agent)
+        if (agentData) {
+          const dataAsJSON = JSON.parse(agentData) as AgentState
+
+          dispatch({
+            type: DispatchAction.ADD_AGENTS,
             payload: [dataAsJSON],
           })
         }
