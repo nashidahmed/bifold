@@ -288,6 +288,9 @@ const translation = {
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here.",
     "WhatAreContacts": "What are Contacts?",
     "AddContact": "Add Contact",
+    "Infrastructure": "Infrastructure",
+    "CA": "Certificate Authority (CA)",
+    "NoContacts": "No contacts to show",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -526,6 +529,8 @@ const translation = {
     "Home": "Notifications",
     "Scan": "Scan",
     "Credentials": "Credentials",
+    "Contacts": "Contacts",
+    "ServiceContacts": "Service Contacts",
   },
   "RootStack": {
     "Contacts": "Contacts",

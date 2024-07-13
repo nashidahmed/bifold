@@ -286,6 +286,9 @@ const translation = {
         "PeopleAndOrganizations": "People and organizations you've interacted with are listed here. (FR)",
         "WhatAreContacts": "What are Contacts? (FR)",
         "AddContact": "Add Contact (FR)",
+        "Infrastructure": "Infrastructure",
+        "CA": "Autorité de certification (AC)",
+        "NoContacts": "Aucun contact à afficher",
     },
     "ContactDetails": {
         "Created": "Créé",
@@ -507,7 +510,8 @@ const translation = {
     "TabStack": {
         "Home": "Notifications (FR)",
         "Scan": "Numériser",
-        "Credentials": "Justificatifs"
+        "Credentials": "Justificatifs",
+        "Contacts": "Contacts",
     },
     "RootStack": {
         "Contacts": "Contacts",
