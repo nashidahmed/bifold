@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import { ConnectionRecord, ConnectionType } from '@aries-framework/core'
 import { useConnections } from '@aries-framework/react-hooks'
+import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import ContactListItem from '../components/listItems/ContactListItem'
@@ -15,10 +17,15 @@ import { testIdWithKey } from '../utils/testable'
 
 interface ListContactsProps {
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
+  route: RouteProp<ContactStackParams, Screens.Contacts>
 }
 
-const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
-  const { ColorPallet } = useTheme()
+const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
+  let isService = false
+  if (route && route.params && route.params.isService) {
+    isService = route.params.isService
+  }
+  const { ColorPallet, TextTheme } = useTheme()
   const { t } = useTranslation()
   const style = StyleSheet.create({
     list: {
@@ -34,8 +41,17 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const [store] = useStore()
   // Filter out mediator agents
   let connections: ConnectionRecord[] = records
+  console.log(store.agent)
   if (!store.preferences.developerModeEnabled) {
-    connections = records.filter((r) => !r.connectionTypes.includes(ConnectionType.Mediator))
+    if (isService) {
+      connections = records.filter((r) => [...store.agent.infrastructure, ...store.agent.ca].includes(r.id))
+    } else {
+      connections = records.filter(
+        (r) =>
+          !r.connectionTypes.includes(ConnectionType.Mediator) &&
+          ![...store.agent.infrastructure, ...store.agent.ca].includes(r.id)
+      )
+    }
   }
 
   // Sort connections by updatedAt
@@ -72,7 +88,40 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
     }
   }, [store.preferences.useConnectionInviterCapability])
 
-  return (
+  return isService ? (
+    <View>
+      <View style={{ padding: 20 }}>
+        <Text style={[TextTheme.label]}>{t('Contacts.Infrastructure')}</Text>
+      </View>
+      <FlatList
+        style={style.list}
+        data={connections.filter((r) => store.agent.infrastructure.includes(r.id))}
+        ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
+        keyExtractor={(connection) => connection.id}
+        renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
+        ListEmptyComponent={() => (
+          <View style={{ marginBottom: 10, paddingLeft: 20 }}>
+            <Text style={[TextTheme.labelSubtitle]}>{t('Contacts.NoContacts')}</Text>
+          </View>
+        )}
+      />
+      <View style={{ padding: 20 }}>
+        <Text style={[TextTheme.label]}>{t('Contacts.CA')}</Text>
+      </View>
+      <FlatList
+        style={style.list}
+        data={connections.filter((r) => store.agent.ca.includes(r.id))}
+        ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
+        keyExtractor={(connection) => connection.id}
+        renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
+        ListEmptyComponent={() => (
+          <View style={{ marginBottom: 10, paddingLeft: 20 }}>
+            <Text style={[TextTheme.labelSubtitle]}>{t('Contacts.NoContacts')}</Text>
+          </View>
+        )}
+      />
+    </View>
+  ) : (
     <View>
       <FlatList
         style={style.list}
