@@ -58,7 +58,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           hasAltCredentials={hasAltCredentials}
           proof
           elevated
-        ></CredentialCard11>
+        />
       )
     }
 

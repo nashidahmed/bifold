@@ -78,10 +78,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   hasAltCredentials,
   handleAltCredChange,
 }) => {
-  const { width } = useWindowDimensions()
+  const { width, height } = useWindowDimensions()
+  const cardWidth = 0.475 * width
+  const cardHeight = 0.25 * height
   const borderRadius = 10
   const padding = width * 0.05
-  const logoHeight = width * 0.12
+  const logoHeight = cardHeight * 0.6
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
   const { OCABundleResolver } = useConfiguration()
@@ -127,15 +129,17 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const styles = StyleSheet.create({
     container: {
       backgroundColor: '#113B51', //hardcode overlay.brandingOverlay?.primaryBackgroundColor,
-
       borderRadius: borderRadius,
+      height: cardHeight,
+      width: cardWidth,
     },
     cardContainer: {
       flexDirection: 'row',
-      minHeight: 0.33 * width,
+      // minHeight: 0.33 * width,
+      height: '100%',
     },
     secondaryBodyContainer: {
-      width: logoHeight,
+      width: '15%',
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
       backgroundColor: '#0D2D3E', //hardcode getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor
@@ -143,7 +147,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     primaryBodyContainer: {
       flex: 1,
       padding,
-      marginLeft: -1 * logoHeight + padding,
+      marginLeft: -1.25 * logoHeight + padding,
     },
     imageAttr: {
       height: 150,
@@ -161,8 +165,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       alignItems: 'center',
     },
     logoContainer: {
-      top: padding,
-      left: -1 * logoHeight + padding,
+      top: cardHeight * 0.2,
+      left: -1.1 * logoHeight + padding,
       width: logoHeight,
       height: logoHeight,
       backgroundColor: '#ffffff',
@@ -516,7 +520,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               style={[
                 {
                   position: 'absolute',
-                  width: logoHeight,
+                  width: '100%',
                   height: '100%',
                   borderTopLeftRadius: borderRadius,
                   borderBottomLeftRadius: borderRadius,

@@ -37,7 +37,7 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
     <View
       style={{
         backgroundColor: ColorPallet.brand.secondaryBackground,
-        marginTop: 16,
+        // marginTop: 16,
         paddingHorizontal: 25,
         paddingVertical: 16,
       }}

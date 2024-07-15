@@ -34,7 +34,13 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
   const handleCodeScan = async (value: string) => {
     setQrCodeScanError(null)
     try {
-      const uri = value
+      let uri
+      try {
+        const invitation = JSON.parse(value)
+        uri = invitation.invitation_url
+      } catch {
+        uri = value
+      }
       await handleInvitation(navigation, route, agent, uri)
     } catch (e: unknown) {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), value)
