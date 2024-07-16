@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { LocalStorageKeys } from '../../constants'
@@ -10,6 +11,7 @@ import {
   LoginAttempt as LoginAttemptState,
   Migration as MigrationState,
   State,
+  Agent as AgentState,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 
@@ -68,6 +70,12 @@ enum DeepLinkDispatchAction {
   ACTIVE_DEEP_LINK = 'deepLink/activeDeepLink',
 }
 
+enum AgentDispatchAction {
+  ADD_TO_INFRASTRUCTURE = 'agent/addToInfrastructure',
+  ADD_TO_CA = 'agent/addToCA',
+  ADD_AGENTS = 'agent/addAgents',
+}
+
 export type DispatchAction =
   | OnboardingDispatchAction
   | LoginAttemptDispatchAction
@@ -77,6 +85,7 @@ export type DispatchAction =
   | AuthenticationDispatchAction
   | DeepLinkDispatchAction
   | MigrationDispatchAction
+  | AgentDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
@@ -87,6 +96,7 @@ export const DispatchAction = {
   ...AuthenticationDispatchAction,
   ...DeepLinkDispatchAction,
   ...MigrationDispatchAction,
+  ...AgentDispatchAction,
 }
 
 export interface ReducerAction<R> {
@@ -538,6 +548,45 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         ...{ deepLink: { activeDeepLink: value } },
       }
+    }
+    case AgentDispatchAction.ADD_TO_INFRASTRUCTURE: {
+      const value: AgentState = (action.payload || []).pop()
+      const newState = {
+        ...state,
+        agent: {
+          ...state.agent,
+          infrastructure: [...state.agent.infrastructure, value],
+        },
+      }
+      console.log('############################################################')
+      console.log(state.agent)
+      AsyncStorage.setItem(LocalStorageKeys.Agent, JSON.stringify(newState.agent))
+      return newState
+    }
+    case AgentDispatchAction.ADD_TO_CA: {
+      const value: AgentState = (action.payload || []).pop()
+      const newState = {
+        ...state,
+        agent: {
+          ...state.agent,
+          ca: [...state.agent.ca, value],
+        },
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Agent, JSON.stringify(newState.agent))
+      return newState
+    }
+    case AgentDispatchAction.ADD_AGENTS: {
+      const value: AgentState = (action.payload || []).pop()
+      const newState = {
+        ...state,
+        agent: {
+          ...state.agent,
+          infrastructure: [...state.agent.infrastructure, ...value.infrastructure],
+          ca: [...state.agent.ca, ...value.ca],
+        },
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Agent, JSON.stringify(newState.agent))
+      return newState
     }
     default:
       return state

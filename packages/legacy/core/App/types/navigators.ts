@@ -60,6 +60,8 @@ export enum TabStacks {
   HomeStack = 'Tab Home Stack',
   ConnectStack = 'Tab Connect Stack',
   CredentialStack = 'Tab Credential Stack',
+  ContactStack = 'Tab Contact Stack',
+  ServiceContactStack = 'Tab Service Contact Stack',
 }
 
 export type RootStackParams = {
@@ -77,6 +79,8 @@ export type TabStackParams = {
   [TabStacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
   [TabStacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [TabStacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
+  [TabStacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
+  [TabStacks.ServiceContactStack]: NavigatorScreenParams<ServiceContactStackParams>
 }
 
 export type AuthenticateStackParams = {
@@ -97,7 +101,7 @@ export type OnboardingStackParams = {
 
 export type ContactStackParams = {
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
-  [Screens.Contacts]: undefined
+  [Screens.Contacts]: { isService?: boolean }
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.RenameContact]: { connectionId: string }
@@ -111,6 +115,8 @@ export type ContactStackParams = {
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
   [Screens.ProofRequest]: { proofId: string }
 }
+
+export type ServiceContactStackParams = ContactStackParams
 
 export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: { connectionId?: string }

@@ -181,6 +181,12 @@ const translation = {
         "ToContinueUsing": "Pour continuer à utiliser la fonction de balayage du Portefeuille QC, autoriser l'utilisation de caméra.",
         "OpenSettings": "Ourvir Paramètres",
     },
+    "BluetoothDisclosure": {
+        "AllowUse": "Allow bluetooth use",
+        "Disclosure": "The bluetooth is used to search and connect with other devices.",
+        "ToContinueUsing": "To continue using the FHWA bluetooth feature, please allow bluetooth permissions.",
+        "OpenSettings": "Open settings",
+    },
     "PINCreate": {
         "Message": {
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
@@ -232,6 +238,8 @@ const translation = {
     "ScanBLE": {
         "BluetoothText": "Please turn on Bluetooth to continue.",
         "Text1": "Assurez-vous que Bluetooth est activé sur les deux appareils. Utilisez le bouton ci-dessous pour rechercher les appareils disponibles et envoyer une invitation à vous connecter.",
+        "Text2": "Appareils disponibles",
+        "Text3": "Aucun périphérique trouvé",
         "Toggle": "Activer/Désactiver la découverte Bluetooth",
         "ScanDevices": "Rechercher des appareils",
         "MakeDiscoverable": "Rendre visible"
@@ -278,6 +286,9 @@ const translation = {
         "PeopleAndOrganizations": "People and organizations you've interacted with are listed here. (FR)",
         "WhatAreContacts": "What are Contacts? (FR)",
         "AddContact": "Add Contact (FR)",
+        "Infrastructure": "Infrastructure",
+        "CA": "Autorité de certification (AC)",
+        "NoContacts": "Aucun contact à afficher",
     },
     "ContactDetails": {
         "Created": "Créé",
@@ -499,7 +510,8 @@ const translation = {
     "TabStack": {
         "Home": "Notifications (FR)",
         "Scan": "Numériser",
-        "Credentials": "Justificatifs"
+        "Credentials": "Justificatifs",
+        "Contacts": "Contacts",
     },
     "RootStack": {
         "Contacts": "Contacts",

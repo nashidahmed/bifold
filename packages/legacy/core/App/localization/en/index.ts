@@ -181,6 +181,12 @@ const translation = {
     "ToContinueUsing": "To continue using the FHWA bluetooth feature, please allow location permissions.",
     "OpenSettings": "Open settings",
   },
+  "BluetoothDisclosure": {
+    "AllowUse": "Allow bluetooth use",
+    "Disclosure": "The bluetooth is used to search and connect with other devices.",
+    "ToContinueUsing": "To continue using the FHWA bluetooth feature, please allow bluetooth permissions.",
+    "OpenSettings": "Open settings",
+  },
   "PINCreate": {
     "Message": {
       "CrossPatternValidation": "A pattern of cross was detected in your PIN. Please try again.",
@@ -234,6 +240,8 @@ const translation = {
     "Connect": "Connect",
     "BluetoothText": "Please turn on Bluetooth to continue.",
     "Text1": "Ensure Bluetooth is enabled on both devices. Use the button below to scan for available devices and send and invitation to connect.",
+    "Text2": "Available Devices",
+    "Text3": "No devices found",
     "Toggle": "Toggle Bluetooth discovery",
     "ScanDevices": "Scan for devices",
     "MakeDiscoverable": "Make Discoverable"
@@ -280,6 +288,9 @@ const translation = {
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here.",
     "WhatAreContacts": "What are Contacts?",
     "AddContact": "Add Contact",
+    "Infrastructure": "Infrastructure",
+    "CA": "Certificate Authority (CA)",
+    "NoContacts": "No contacts to show",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -518,6 +529,8 @@ const translation = {
     "Home": "Notifications",
     "Scan": "Scan",
     "Credentials": "Credentials",
+    "Contacts": "Contacts",
+    "ServiceContacts": "Service Contacts",
   },
   "RootStack": {
     "Contacts": "Contacts",

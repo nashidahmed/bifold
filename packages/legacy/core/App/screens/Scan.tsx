@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
@@ -22,7 +23,7 @@ export type ScanProps = StackScreenProps<ConnectStackParams>
 const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [store] = useStore()
+  const [store, dispatch] = useStore()
   const [loading, setLoading] = useState<boolean>(true)
   const [showDisclosureModal, setShowDisclosureModal] = useState<boolean>(true)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
@@ -33,15 +34,21 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
 
   const handleCodeScan = async (value: string) => {
     setQrCodeScanError(null)
+    console.log(value)
     try {
       let uri
+      let agentType = ''
+      // This is to differentiate infrastructure, CA and regular contacts
+      // The QR code from infrastrcture and CA will come as an object but from regular contacts, it will be a string
       try {
+        // Try parsing the scanned code, if it cannot be scanned, it is a string from regular contacts
         const invitation = JSON.parse(value)
         uri = invitation.invitation_url
+        agentType = invitation.agent
       } catch {
         uri = value
       }
-      await handleInvitation(navigation, route, agent, uri)
+      await handleInvitation(navigation, route, agent, uri, agentType, dispatch)
     } catch (e: unknown) {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), value)
       setQrCodeScanError(error)
