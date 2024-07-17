@@ -79,15 +79,15 @@ const TabStack: React.FC = () => {
                         fontWeight: focused ? TextTheme.bold.fontWeight : TextTheme.normal.fontWeight,
                       }}
                     >
-                      {t('TabStack.Home')}
+                      {t('TabStack.Notification')}
                     </Text>
                   )}
                 </View>
               </AttachTourStep>
             ),
             tabBarShowLabel: false,
-            tabBarAccessibilityLabel: `${t('TabStack.Home')} (${total ?? 0})`,
-            tabBarTestID: testIdWithKey(t('TabStack.Home')),
+            tabBarAccessibilityLabel: `${t('TabStack.Notification')} (${total ?? 0})`,
+            tabBarTestID: testIdWithKey(t('TabStack.Notification')),
             tabBarBadge: total || undefined,
             tabBarBadgeStyle: {
               marginLeft: leftMarginForDevice(),

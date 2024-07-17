@@ -389,7 +389,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
     toggleDeclineModalVisible()
 
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
   }
 
   const proofPageHeader = () => {

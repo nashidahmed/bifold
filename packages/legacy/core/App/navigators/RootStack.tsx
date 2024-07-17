@@ -256,7 +256,7 @@ const RootStack: React.FC = () => {
                 accessibilityLabel={t('Global.Back')}
                 testID={testIdWithKey('BackButton')}
                 onPress={() => {
-                  navigation.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+                  navigation.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
                 }}
                 icon="arrow-left"
               />

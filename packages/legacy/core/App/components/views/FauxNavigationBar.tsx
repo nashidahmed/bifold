@@ -50,7 +50,7 @@ const FauxNavigationBar: React.FC<FauxNavigationBarProps> = ({ title, onHomeTouc
           <Text style={styles.label}>{title}</Text>
           {onHomeTouched && (
             <TouchableOpacity
-              accessibilityLabel={t('Global.Home')}
+              accessibilityLabel={t('Global.Notification')}
               accessibilityRole={'button'}
               testID={testIdWithKey('HomeButton')}
               onPress={onHomeTouched}

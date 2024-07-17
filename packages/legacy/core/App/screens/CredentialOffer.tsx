@@ -182,7 +182,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       }
 
       toggleDeclineModalVisible()
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)

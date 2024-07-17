@@ -45,19 +45,19 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
     if (credentialCount === 1) {
       credentialMsg = (
         <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</Text>{' '}
-          {t('Home.Credential')} {t('Home.InYourWallet')}
+          {t('Notification.YouHave')} <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</Text>{' '}
+          {t('Notification.Credential')} {t('Notification.InYourWallet')}
         </Text>
       )
     } else if (credentialCount > 1) {
       credentialMsg = (
         <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</Text>{' '}
-          {t('Home.Credentials')} {t('Home.InYourWallet')}
+          {t('Notification.YouHave')} <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</Text>{' '}
+          {t('Notification.Credentials')} {t('Notification.InYourWallet')}
         </Text>
       )
     } else {
-      credentialMsg = t('Home.NoCredentials')
+      credentialMsg = t('Notification.NoCredentials')
     }
 
     return (
@@ -65,7 +65,7 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
         {notifications.total === 0 && (
           <View style={[styles.messageContainer]}>
             <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
-              {t('Home.Welcome')}
+              {t('Notification.Welcome')}
             </Text>
           </View>
         )}

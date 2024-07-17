@@ -18,10 +18,10 @@ const HomeStack: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
-        name={Screens.Home}
+        name={Screens.Notification}
         component={Home}
         options={() => ({
-          title: t('Screens.Home'),
+          title: t('Screens.Notification'),
           headerRight: () => null,
           headerLeft: () => <SettingsMenu />,
         })}

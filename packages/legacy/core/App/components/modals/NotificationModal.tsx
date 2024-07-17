@@ -79,7 +79,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 
   const closeHome = () => {
     close()
-    navigation.navigate(Screens.Home)
+    navigation.navigate(Screens.Notification)
   }
 
   return (
@@ -89,9 +89,9 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           <View style={styles.iconContainer}>
             <TouchableOpacity
               accessible={true}
-              accessibilityLabel={t('Global.Home')}
+              accessibilityLabel={t('Global.Notification')}
               accessibilityRole={'button'}
-              testID={testIdWithKey('Home')}
+              testID={testIdWithKey('Notification')}
               style={styles.iconButton}
               onPress={onHome || closeHome}
               hitSlop={hitSlop}

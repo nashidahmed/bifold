@@ -62,7 +62,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
 
       await agent.connections.deleteById(connection.id)
 
-      navigation.navigate(Screens.Contacts)
+      // navigation.navigate(Screens.Contacts)
 
       // FIXME: This delay is a hack so that the toast doesn't appear until the modal is dismissed
       await new Promise((resolve) => setTimeout(resolve, 1000))

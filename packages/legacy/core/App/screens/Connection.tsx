@@ -118,7 +118,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   const onDismissModalTouched = () => {
     dispatch({ shouldShowDelayMessage: false, isVisible: false })
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
   }
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (state.shouldShowDelayMessage && !state.notificationRecord) {
       if (autoRedirectConnectionToHome) {
         dispatch({ shouldShowDelayMessage: false, isVisible: false })
-        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
       } else {
         AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
       }

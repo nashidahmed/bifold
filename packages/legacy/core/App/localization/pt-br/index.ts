@@ -23,7 +23,7 @@ const translation = {
     "Done": "Feito",
     "Skip": "Pular",
     "View": "Visualizar",
-    "Home": "Home",
+    "Notification": "Notification",
     "ErrorCode": "Código de Erro",
     "Okay": "OK",
     "GoBack": "Voltar",
@@ -333,7 +333,7 @@ const translation = {
     "IssuedBy": "Emitida por:",
     "RemoveCredential": "Remover Credencial",
   },
-  "Home": {
+  "Notification": {
     "Welcome": "Bem Vindo",
     "Notifications": "Notificações",
     "NoNewUpdates": "Você não tem novas notificações.",
@@ -494,7 +494,7 @@ const translation = {
     "Developer": "Opções de Desenvolvedor"
   },
   "TabStack": {
-    "Home": "Notificações",
+    "Notification": "Notificações",
     "Scan": "Scanear",
     "Credentials": "Credenciais",
     "Contacts": "Contatos",
@@ -527,7 +527,7 @@ const translation = {
     "Terms": "Termos & Condições",
     "CreatePIN": "Criar um PIN",
     "EnterPIN": "Digitar o PIN",
-    "Home": "Notificações",
+    "Notification": "Notificações",
     "Scan": "Scanear",
     "Credentials": "Credenciais",
     "CredentialDetails": "Detalhes de Credencial",

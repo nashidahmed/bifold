@@ -1,149 +1,85 @@
-import { useIsFocused } from '@react-navigation/native'
-import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FlatList, View, StyleSheet } from 'react-native'
+import React from 'react'
+import { View, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
-import NoNewUpdates from '../components/misc/NoNewUpdates'
-import AppGuideModal from '../components/modals/AppGuideModal'
-import { useConfiguration } from '../contexts/configuration'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
-import { useTheme } from '../contexts/theme'
-import { useTour } from '../contexts/tour/tour-context'
-import { HomeStackParams, Screens } from '../types/navigators'
-import { TourID } from '../types/tour'
-
-type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
-
-const Home: React.FC<HomeProps> = () => {
-  const {
-    useCustomNotifications,
-    enableTours: enableToursConfig,
-    homeFooterView: HomeFooterView,
-    homeHeaderView: HomeHeaderView,
-  } = useConfiguration()
-  const { notifications } = useCustomNotifications()
-  const { t } = useTranslation()
-
-  const { ColorPallet } = useTheme()
-  const [store, dispatch] = useStore()
-  const { start } = useTour()
-  const [showTourPopup, setShowTourPopup] = useState(false)
-  const screenIsFocused = useIsFocused()
+const Home = () => {
+  const handlePress = (buttonNumber: number) => {
+    Alert.alert(`Button ${buttonNumber} pressed!`)
+    // Add navigation logic here
+  }
 
   const styles = StyleSheet.create({
-    flatlist: {
-      marginBottom: 35,
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
-    noNewUpdatesContainer: {
-      paddingHorizontal: 20,
-      paddingVertical: 20,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+    row: {
+      flexDirection: 'row',
+      margin: 10,
+    },
+    buttonContainer: {
+      flex: 1,
+      margin: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 20,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      elevation: 2,
+      height: 250,
+    },
+    buttonText: {
+      fontSize: 22,
+      color: 'black',
     },
   })
 
-  const DisplayListItemType = (item: any): React.ReactNode => {
-    let component: React.ReactNode
-    if (item.type === 'BasicMessageRecord') {
-      component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
-    } else if (item.type === 'CredentialRecord') {
-      let notificationType = NotificationType.CredentialOffer
-      if (item.revocationNotification) {
-        notificationType = NotificationType.Revocation
-      }
-      component = <NotificationListItem notificationType={notificationType} notification={item} />
-    } else if (item.type === 'CustomNotification') {
-      component = <NotificationListItem notificationType={NotificationType.Custom} notification={item} />
-    } else {
-      component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
-    }
-    return component
-  }
-
-  useEffect(() => {
-    const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
-
-    if (shouldShowTour && screenIsFocused) {
-      if (store.tours.seenToursPrompt) {
-        dispatch({
-          type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
-          payload: [true],
-        })
-        start(TourID.HomeTour)
-      } else {
-        dispatch({
-          type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
-          payload: [true],
-        })
-        setShowTourPopup(true)
-      }
-    }
-  }, [screenIsFocused])
-
-  const onCTAPressed = () => {
-    setShowTourPopup(false)
-    dispatch({
-      type: DispatchAction.ENABLE_TOURS,
-      payload: [true],
-    })
-    dispatch({
-      type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
-      payload: [true],
-    })
-    start(TourID.HomeTour)
-  }
-
-  const onDismissPressed = () => {
-    setShowTourPopup(false)
-    dispatch({
-      type: DispatchAction.ENABLE_TOURS,
-      payload: [false],
-    })
-  }
-
   return (
-    <>
-      <FlatList
-        style={styles.flatlist}
-        showsVerticalScrollIndicator={false}
-        scrollEnabled={notifications?.length > 0 ? true : false}
-        decelerationRate="fast"
-        ListEmptyComponent={() => (
-          <View style={styles.noNewUpdatesContainer}>
-            <NoNewUpdates />
-          </View>
-        )}
-        ListHeaderComponent={() => <HomeHeaderView />}
-        ListFooterComponent={() => <HomeFooterView />}
-        data={notifications}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => (
-          <View
-            style={{
-              paddingHorizontal: 20,
-              paddingTop: index === 0 ? 20 : 0,
-              paddingBottom: index === notifications.length - 1 ? 20 : 10,
-              backgroundColor: ColorPallet.brand.secondaryBackground,
-            }}
-          >
-            {DisplayListItemType(item)}
-          </View>
-        )}
-      />
-      {showTourPopup && (
-        <AppGuideModal
-          title={t('Tour.GuideTitle')}
-          description={t('Tour.WouldYouLike')}
-          onCallToActionPressed={onCTAPressed}
-          onCallToActionLabel={t('Tour.UseAppGuides')}
-          onSecondCallToActionPressed={onDismissPressed}
-          onSecondCallToActionLabel={t('Tour.DoNotUseAppGuides')}
-          onDismissPressed={onDismissPressed}
-        />
-      )}
-    </>
+    <View style={styles.container}>
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(1)}>
+          <Icon name="wallet-outline" color="#1C6DA5" size={80} />
+          <Text style={styles.buttonText}>Credentials</Text>
+        </TouchableOpacity>
+        {/* card-account-details-outline */}
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(2)}>
+          <Icon name="bluetooth" color="#1C6DA5" size={80} />
+          <Text style={styles.buttonText}>Bluetooth</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(3)}>
+          <Icon name="qrcode" color="#1C6DA5" size={80} />
+          <Text style={styles.buttonText}>Generate QR</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(4)}>
+          <Icon name="bell-outline" color="#1C6DA5" size={80} />
+          <Text style={styles.buttonText}>Notifications</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(5)}>
+          <Icon name="contacts-outline" color="#1C6DA5" size={80} />
+          <Text style={styles.buttonText}>Contacts</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(6)}>
+          <Icon name="domain" color="#1C6DA5" size={80} />
+          <Text style={styles.buttonText}>Infrastructure</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(7)}>
+          <Icon name="alert-circle-outline" color="#1C6DA5" size={80} />
+          <Text style={styles.buttonText}>About</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(8)}>
+          <Icon name="cogs" color="#1C6DA5" size={80} />
+          <Text style={styles.buttonText}>Settings</Text>
+        </TouchableOpacity>
+        {/* cog-outline */}
+      </View>
+    </View>
   )
 }
 

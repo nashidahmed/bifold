@@ -69,7 +69,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   }
 
   const onBackToHomeTouched = () => {
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
   }
 
   const onDoneTouched = () => {

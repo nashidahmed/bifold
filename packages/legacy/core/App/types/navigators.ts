@@ -9,7 +9,7 @@ export enum Screens {
   Preface = 'Preface',
   CreatePIN = 'Create a PIN',
   EnterPIN = 'Enter PIN',
-  Home = 'Home',
+  Notification = 'Notification',
   Scan = 'Scan',
   Credentials = 'Credentials',
   CredentialDetails = 'Credential Details',
@@ -42,11 +42,12 @@ export enum Screens {
   ScanHelp = 'Scan Help',
   QRCodeGen = 'Generate QR Code',
   ScanBLE = 'Bluetooth',
+  Home = 'Home',
 }
 
 export enum Stacks {
   TabStack = 'Tab Stack',
-  HomeStack = 'Home Stack',
+  HomeStack = 'Notification Stack',
   ConnectStack = 'Connect Stack',
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
@@ -57,7 +58,7 @@ export enum Stacks {
 }
 
 export enum TabStacks {
-  HomeStack = 'Tab Home Stack',
+  HomeStack = 'Tab Notification Stack',
   ConnectStack = 'Tab Connect Stack',
   CredentialStack = 'Tab Credential Stack',
   ContactStack = 'Tab Contact Stack',
@@ -139,7 +140,7 @@ export type CredentialStackParams = {
 }
 
 export type HomeStackParams = {
-  [Screens.Home]: undefined
+  [Screens.Notification]: undefined
 }
 
 export type ConnectStackParams = {

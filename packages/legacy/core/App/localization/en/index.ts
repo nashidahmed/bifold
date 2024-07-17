@@ -23,7 +23,7 @@ const translation = {
     "Done": "Done",
     "Skip": "Skip",
     "View": "View",
-    "Home": "Home",
+    "Notification": "Notification",
     "ErrorCode": "Error Code",
     "Okay": "Okay",
     "GoBack": "Go Back",
@@ -36,6 +36,7 @@ const translation = {
     "Off": "Off",
     "Close": "Close",
     "Remove": "Remove",
+    "Home": "Home",
   },
   "Date": {
     "ShortFormat": "MMM D",
@@ -352,7 +353,7 @@ const translation = {
     "IssuedBy": "Issued by:",
     "RemoveCredential": "Remove Credential",
   },
-  "Home": {
+  "Notification": {
     "Welcome": "Welcome",
     "Notification": "Notification",
     "Notifications": "Notifications",
@@ -526,7 +527,7 @@ const translation = {
     "Developer": "Developer options"
   },
   "TabStack": {
-    "Home": "Notifications",
+    "Notification": "Notifications",
     "Scan": "Scan",
     "Credentials": "Credentials",
     "Contacts": "Contacts",
@@ -560,7 +561,7 @@ const translation = {
     "Terms": "Terms & Conditions",
     "CreatePIN": "Create a PIN",
     "EnterPIN": "Enter PIN",
-    "Home": "Notifications",
+    "Notification": "Notifications",
     "Scan": "Scan",
     "Credentials": "Credentials",
     "CredentialDetails": "Credential Details",

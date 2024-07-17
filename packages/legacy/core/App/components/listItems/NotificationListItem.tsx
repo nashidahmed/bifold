@@ -229,9 +229,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         case NotificationType.BasicMessage:
           resolve({
             type: InfoBoxType.Info,
-            title: t('Home.NewMessage'),
-            body: theirLabel ? `${theirLabel} ${t('Home.SentMessage')}` : t('Home.ReceivedMessage'),
-            buttonTitle: t('Home.ViewMessage'),
+            title: t('Notification.NewMessage'),
+            body: theirLabel ? `${theirLabel} ${t('Notification.SentMessage')}` : t('Notification.ReceivedMessage'),
+            buttonTitle: t('Notification.ViewMessage'),
           })
           break
         case NotificationType.CredentialOffer:

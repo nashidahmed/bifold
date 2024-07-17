@@ -23,7 +23,7 @@ const translation = {
         "Done": "Terminé",
         "Skip": "Ignorer",
         "View": "Afficher",
-        "Home": "Accueil",
+        "Notification": "Accueil",
         "ErrorCode": "Code d'erreur",
         "Okay": "Ok",
         "GoBack": "Retour",
@@ -350,7 +350,7 @@ const translation = {
         "IssuedBy": "Émis par:",
         "RemoveCredential": "Supprimé justificatif d'identité",
     },
-    "Home": {
+    "Notification": {
         "Welcome": "Bienvenue",
         "Notification": "Notification",
         "Notifications": "Notifications",
@@ -508,7 +508,7 @@ const translation = {
         "Developer": "Options de développeur"
     },
     "TabStack": {
-        "Home": "Notifications (FR)",
+        "Notification": "Notifications (FR)",
         "Scan": "Numériser",
         "Credentials": "Justificatifs",
         "Contacts": "Contacts",
@@ -541,7 +541,7 @@ const translation = {
         "Terms": "Conditions d'utilisation",
         "CreatePIN": "Créer un NIP à 6 chiffres",
         "EnterPIN": "Saisir le NIP",
-        "Home": "Notifications (FR)",
+        "Notification": "Notifications (FR)",
         "Scan": "Numériser",
         "Credentials": "Justificatifs",
         "CredentialDetails": "Détails des justificatifs",
