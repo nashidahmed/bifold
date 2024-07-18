@@ -1,12 +1,12 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
-import { View, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { Screens, Stacks } from '../types/navigators'
+
 const Home = () => {
-  const handlePress = (buttonNumber: number) => {
-    Alert.alert(`Button ${buttonNumber} pressed!`)
-    // Add navigation logic here
-  }
+  const navigation = useNavigation()
 
   const styles = StyleSheet.create({
     container: {
@@ -42,38 +42,71 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(1)}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => navigation.getParent()?.navigate(Stacks.CredentialStack, { screen: Screens.Credentials })}
+        >
           <Icon name="wallet-outline" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Credentials</Text>
         </TouchableOpacity>
         {/* card-account-details-outline */}
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(2)}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ScanBLE })}
+        >
           <Icon name="bluetooth" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Bluetooth</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(3)}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen })}
+        >
           <Icon name="qrcode" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Generate QR</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(4)}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => navigation.getParent()?.navigate(Stacks.NotificationStack, { screen: Screens.Notification })}
+        >
           <Icon name="bell-outline" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Notifications</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(5)}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() =>
+            navigation
+              .getParent()
+              ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
+          }
+        >
           <Icon name="contacts-outline" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Contacts</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(6)}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() =>
+            navigation.getParent()?.navigate(Stacks.ContactStack, {
+              screen: Screens.Contacts,
+              params: { navigation: navigation, serviceName: 'Infrastructure' },
+            })
+          }
+        >
           <Icon name="domain" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Infrastructure</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(7)}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen })}
+        >
           <Icon name="alert-circle-outline" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>About</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => handlePress(8)}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => navigation.getParent()?.navigate(Stacks.SettingStack, { screen: Screens.Settings })}
+        >
           <Icon name="cogs" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Settings</Text>
         </TouchableOpacity>

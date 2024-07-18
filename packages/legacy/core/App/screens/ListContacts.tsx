@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import ContactListItem from '../components/listItems/ContactListItem'
@@ -21,11 +21,11 @@ interface ListContactsProps {
 }
 
 const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
-  let isService = false
-  if (route && route.params && route.params.isService) {
-    isService = route.params.isService
+  let serviceName = ''
+  if (route && route.params && route.params.serviceName) {
+    serviceName = route.params.serviceName
   }
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const { t } = useTranslation()
   const style = StyleSheet.create({
     list: {
@@ -43,8 +43,10 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
   let connections: ConnectionRecord[] = records
   console.log(store.agent)
   if (!store.preferences.developerModeEnabled) {
-    if (isService) {
-      connections = records.filter((r) => [...store.agent.infrastructure, ...store.agent.ca].includes(r.id))
+    if (serviceName == 'Infrastructure') {
+      connections = records.filter((r) => [...store.agent.infrastructure].includes(r.id))
+    } else if (serviceName == 'CA') {
+      connections = records.filter((r) => [...store.agent.ca].includes(r.id))
     } else {
       connections = records.filter(
         (r) =>
@@ -88,37 +90,32 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
     }
   }, [store.preferences.useConnectionInviterCapability])
 
-  return isService ? (
+  return serviceName == 'Infrastructure' ? (
     <View>
-      <View style={{ padding: 20 }}>
-        <Text style={[TextTheme.label]}>{t('Contacts.Infrastructure')}</Text>
-      </View>
+      {/* <View style={{ padding: 20 }}>
+        <Text style={[TextTheme.label]}>{t('Contacts.'Infrastructure')}</Text>
+      </View> */}
       <FlatList
         style={style.list}
         data={connections.filter((r) => store.agent.infrastructure.includes(r.id))}
         ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
         keyExtractor={(connection) => connection.id}
         renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
-        ListEmptyComponent={() => (
-          <View style={{ marginBottom: 10, paddingLeft: 20 }}>
-            <Text style={[TextTheme.labelSubtitle]}>{t('Contacts.NoContacts')}</Text>
-          </View>
-        )}
+        ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
       />
-      <View style={{ padding: 20 }}>
+    </View>
+  ) : serviceName == 'CA' ? (
+    <View>
+      {/* <View style={{ padding: 20 }}>
         <Text style={[TextTheme.label]}>{t('Contacts.CA')}</Text>
-      </View>
+      </View> */}
       <FlatList
         style={style.list}
         data={connections.filter((r) => store.agent.ca.includes(r.id))}
         ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
         keyExtractor={(connection) => connection.id}
         renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
-        ListEmptyComponent={() => (
-          <View style={{ marginBottom: 10, paddingLeft: 20 }}>
-            <Text style={[TextTheme.labelSubtitle]}>{t('Contacts.NoContacts')}</Text>
-          </View>
-        )}
+        ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
       />
     </View>
   ) : (
@@ -129,7 +126,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
         ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
         keyExtractor={(connection) => connection.id}
         renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
-        ListEmptyComponent={() => <EmptyListContacts navigation={navigation} />}
+        ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
       />
     </View>
   )

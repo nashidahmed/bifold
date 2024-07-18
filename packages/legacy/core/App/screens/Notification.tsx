@@ -12,18 +12,13 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
-import { HomeStackParams, Screens } from '../types/navigators'
+import { NotificationStackParams, Screens } from '../types/navigators'
 import { TourID } from '../types/tour'
 
-type HomeProps = StackScreenProps<HomeStackParams, Screens.Notification>
+type HomeProps = StackScreenProps<NotificationStackParams, Screens.Notification>
 
 const Notification: React.FC<HomeProps> = () => {
-  const {
-    useCustomNotifications,
-    enableTours: enableToursConfig,
-    homeFooterView: HomeFooterView,
-    homeHeaderView: HomeHeaderView,
-  } = useConfiguration()
+  const { useCustomNotifications, enableTours: enableToursConfig, homeHeaderView: HomeHeaderView } = useConfiguration()
   const { notifications } = useCustomNotifications()
   const { t } = useTranslation()
 
@@ -116,7 +111,7 @@ const Notification: React.FC<HomeProps> = () => {
           </View>
         )}
         ListHeaderComponent={() => <HomeHeaderView />}
-        ListFooterComponent={() => <HomeFooterView />}
+        // ListFooterComponent={() => <HomeFooterView />}
         data={notifications}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (

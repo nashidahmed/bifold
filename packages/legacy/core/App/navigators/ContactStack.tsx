@@ -3,8 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import HeaderRightHome from '../components/buttons/HeaderHome'
-import SettingsMenu from '../components/buttons/SettingsMenu'
-import { useConfiguration } from '../contexts/configuration'
+// import SettingsMenu from '../components/buttons/SettingsMenu'
 import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
 import ContactDetails from '../screens/ContactDetails'
@@ -27,7 +26,7 @@ const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const { credentialListHeaderRight: CredentialListHeaderRight } = useConfiguration()
+  // const { credentialListHeaderRight: CredentialListHeaderRight } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
 
   return (
@@ -35,11 +34,12 @@ const ContactStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Contacts}
         component={ListContacts}
-        options={{
-          title: t('Screens.Contacts'),
-          headerRight: () => <CredentialListHeaderRight />,
-          headerLeft: () => <SettingsMenu />,
-        }}
+        // options={{
+        //   title: 'infra',
+        //   headerRight: () => <CredentialListHeaderRight />,
+        //   // headerLeft: () => <SettingsMenu />,
+        // }}
+        options={({ route }) => ({ title: route.params?.serviceName || 'Contacts' })} // Set title dynamically based on route params
       />
       <Stack.Screen
         name={Screens.ContactDetails}

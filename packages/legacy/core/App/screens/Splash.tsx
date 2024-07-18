@@ -298,7 +298,7 @@ const Splash: React.FC = () => {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: Stacks.TabStack }],
+            routes: [{ name: Stacks.HomeStack }],
           })
         )
       } catch (err: unknown) {

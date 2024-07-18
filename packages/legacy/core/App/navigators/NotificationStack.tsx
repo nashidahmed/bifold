@@ -6,6 +6,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import CredentialDetails from '../screens/CredentialDetails'
 import CredentialOffer from '../screens/CredentialOffer'
+import Notification from '../screens/Notification'
 import ProofRequest from '../screens/ProofRequest'
 import { NotificationStackParams, Screens } from '../types/navigators'
 
@@ -20,6 +21,7 @@ const NotificationStack: React.FC = () => {
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
+      <Stack.Screen name={Screens.Notification} component={Notification} />
       <Stack.Screen
         name={Screens.CredentialDetails}
         component={CredentialDetails}

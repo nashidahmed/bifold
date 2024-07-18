@@ -597,6 +597,8 @@ const translation = {
     "ProofRequesting": 'Proof Requesting',
     "NameWallet": "Name your wallet",
     "RenameContact": "Edit Contact Name",
+    "Home": "Home",
+    "CA": "CA"
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

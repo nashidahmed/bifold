@@ -3,8 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import HeaderRightHome from '../components/buttons/HeaderHome'
-import SettingsMenu from '../components/buttons/SettingsMenu'
-import { useConfiguration } from '../contexts/configuration'
+// import SettingsMenu from '../components/buttons/SettingsMenu'
 import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
 import ContactDetails from '../screens/ContactDetails'
@@ -27,7 +26,7 @@ const ServiceContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const { credentialListHeaderRight: CredentialListHeaderRight } = useConfiguration()
+  // const { credentialListHeaderRight: CredentialListHeaderRight } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
 
   return (
@@ -35,12 +34,13 @@ const ServiceContactStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Contacts}
         component={ListContacts}
-        initialParams={{ isService: true }}
-        options={{
-          title: t('Screens.Contacts'),
-          headerRight: () => <CredentialListHeaderRight />,
-          headerLeft: () => <SettingsMenu />,
-        }}
+        initialParams={{ serviceName: 'Infrastructure' }}
+        // options={{
+        //   title: ''Infrastructure',
+        //   headerRight: () => <CredentialListHeaderRight />,
+        //   // headerLeft: () => <SettingsMenu />,
+        // }}
+        options={({ route }) => ({ title: route.params?.serviceName || 'Contacts' })}
       />
       <Stack.Screen
         name={Screens.ContactDetails}

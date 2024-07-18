@@ -106,7 +106,7 @@ const QRCodeGen: React.FC<Props> = ({ navigation }) => {
   }, [])
 
   const handleEdit = () => {
-    navigation.navigate(Screens.NameWallet)
+    navigation.getParent()?.navigate(Stacks.SettingStack, { screen: Screens.NameWallet })
   }
 
   useEffect(() => {

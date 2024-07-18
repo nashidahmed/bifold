@@ -6,7 +6,7 @@ import { Modal, ScrollView, StyleSheet, Text, View, Linking } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../contexts/theme'
-import { Screens, HomeStackParams, TabStacks, Stacks } from '../../types/navigators'
+import { Screens, HomeStackParams, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
@@ -63,7 +63,7 @@ const PermissionDisclosureModal: React.FC<PermissionDisclosureModalProps> = ({ t
     setModalVisible(false)
     await Linking.openSettings()
     if (type == 'CameraDisclosure') {
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
+      navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
     } else {
       navigation.getParent()?.navigate(Stacks.SettingStack, { screen: Screens.ScanBLE })
     }
@@ -72,7 +72,7 @@ const PermissionDisclosureModal: React.FC<PermissionDisclosureModalProps> = ({ t
   const onNotNowTouched = () => {
     setModalVisible(false)
     if (type == 'CameraDisclosure') {
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
+      navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
     } else {
       navigation.getParent()?.navigate(Stacks.SettingStack, { screen: Screens.ScanBLE })
     }

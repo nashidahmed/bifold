@@ -43,11 +43,12 @@ export enum Screens {
   QRCodeGen = 'Generate QR Code',
   ScanBLE = 'Bluetooth',
   Home = 'Home',
+  ServiceContacts = 'Service Contacts',
 }
 
 export enum Stacks {
   TabStack = 'Tab Stack',
-  HomeStack = 'Notification Stack',
+  HomeStack = 'Home Stack',
   ConnectStack = 'Connect Stack',
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
@@ -70,7 +71,9 @@ export type RootStackParams = {
   [Stacks.TabStack]: NavigatorScreenParams<TabStackParams>
   [Screens.Chat]: { connectionId: string }
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
+  [Stacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
+  [Stacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
   [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
@@ -102,7 +105,7 @@ export type OnboardingStackParams = {
 
 export type ContactStackParams = {
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
-  [Screens.Contacts]: { isService?: boolean }
+  [Screens.Contacts]: { serviceName?: string }
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.RenameContact]: { connectionId: string }
@@ -140,8 +143,12 @@ export type CredentialStackParams = {
 }
 
 export type HomeStackParams = {
-  [Screens.Notification]: undefined
+  [Stacks.HomeStack]: NavigatorScreenParams<NotificationStackParams>
 }
+
+// export type ServiceContactStackParams = {
+//   [Screens.Contacts]: { serviceName?: boolean }
+// }
 
 export type ConnectStackParams = {
   [Screens.Scan]: undefined
@@ -163,6 +170,7 @@ export type SettingStackParams = {
 }
 
 export type NotificationStackParams = {
+  [Screens.Notification]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }

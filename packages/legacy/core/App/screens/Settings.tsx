@@ -112,35 +112,36 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       },
       data: [
         {
-          title: t('Screens.Contacts'),
-          accessibilityLabel: t('Screens.Contacts'),
-          testID: testIdWithKey('Contacts'),
+          title: t('Screens.CA'),
+          accessibilityLabel: t('Screens.CA'),
+          testID: testIdWithKey('CA'),
           onPress: () =>
-            navigation
-              .getParent()
-              ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } }),
+            navigation.getParent()?.navigate(Stacks.ContactStack, {
+              screen: Screens.Contacts,
+              params: { navigation: navigation, serviceName: 'CA' },
+            }),
+        },
+        {
+          title: t('Screens.Scan'),
+          accessibilityLabel: t('Screens.Scan'),
+          testID: testIdWithKey('Scan'),
+          onPress: () => navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan }),
+          value: undefined,
         },
         // {
-        //   title: t('Settings.WhatAreContacts'),
-        //   accessibilityLabel: t('Settings.WhatAreContacts'),
-        //   testID: testIdWithKey('WhatAreContacts'),
-        //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.WhatAreContacts }),
+        //   title: t('Settings.QRCodeGen'),
+        //   accessibilityLabel: t('Settings.QRCodeGen'),
+        //   testID: testIdWithKey('QRCodeGen'),
+        //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen }),
         //   value: undefined,
         // },
-        {
-          title: t('Settings.QRCodeGen'),
-          accessibilityLabel: t('Settings.QRCodeGen'),
-          testID: testIdWithKey('QRCodeGen'),
-          onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen }),
-          value: undefined,
-        },
-        {
-          title: t('Settings.ScanBLE'),
-          accessibilityLabel: t('Settings.ScanBLE'),
-          testID: testIdWithKey('ScanBLE'),
-          onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ScanBLE }),
-          value: undefined,
-        },
+        // {
+        //   title: t('Settings.ScanBLE'),
+        //   accessibilityLabel: t('Settings.ScanBLE'),
+        //   testID: testIdWithKey('ScanBLE'),
+        //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ScanBLE }),
+        //   value: undefined,
+        // },
         // {
         //   title: t('Screens.ProofRequestDetails'),
         //   accessibilityLabel: t('Screens.ProofRequestDetails'),

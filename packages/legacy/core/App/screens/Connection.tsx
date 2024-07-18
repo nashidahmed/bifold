@@ -13,7 +13,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useNotifications } from '../hooks/notifications'
-import { Screens, TabStacks, DeliveryStackParams, Stacks } from '../types/navigators'
+import { Screens, DeliveryStackParams, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
@@ -118,7 +118,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   const onDismissModalTouched = () => {
     dispatch({ shouldShowDelayMessage: false, isVisible: false })
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
+    navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
   }
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (state.shouldShowDelayMessage && !state.notificationRecord) {
       if (autoRedirectConnectionToHome) {
         dispatch({ shouldShowDelayMessage: false, isVisible: false })
-        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Notification })
+        navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
       } else {
         AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
       }
@@ -166,7 +166,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId } }],
+          routes: [{ name: Stacks.HomeStack }, { name: Screens.Chat, params: { connectionId } }],
         })
       )
 
