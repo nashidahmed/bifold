@@ -3,10 +3,13 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { useConfiguration } from '../contexts/configuration'
 import { Screens, Stacks } from '../types/navigators'
 
 const Home = () => {
   const navigation = useNavigation()
+  const { useCustomNotifications } = useConfiguration()
+  const { total } = useCustomNotifications()
 
   const styles = StyleSheet.create({
     container: {
@@ -32,13 +35,33 @@ const Home = () => {
       shadowRadius: 2,
       elevation: 2,
       height: 250,
+      position: 'relative',
     },
     buttonText: {
       fontSize: 22,
       color: 'black',
     },
+    badgeContainer: {
+      position: 'absolute',
+      top: 5,
+      right: 5,
+      // top: '35%',
+      // right: '40%',
+      backgroundColor: 'red',
+      width: 30,
+      height: 30,
+      borderRadius: 30,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    badgeText: {
+      color: 'white',
+      fontSize: 12,
+      fontWeight: 'bold',
+    },
   })
-
+  // eslint-disable-next-line no-console
+  console.warn(total != 0)
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -70,6 +93,11 @@ const Home = () => {
         >
           <Icon name="bell-outline" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Notifications</Text>
+          {total != 0 && (
+            <View style={styles.badgeContainer}>
+              <Text style={styles.badgeText}>{total}</Text>
+            </View>
+          )}
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
