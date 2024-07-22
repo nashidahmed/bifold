@@ -4177,7 +4177,7 @@ __metadata:
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
     react-native-orientation-locker: ^1.6.0
-    react-native-permissions: ^3.8.4
+    react-native-permissions: ^4.1.5
     react-native-qrcode-svg: ^6.2.0
     react-native-safe-area-context: ^3.2.0
     react-native-scalable-image: ^1.1.0
@@ -7674,7 +7674,7 @@ __metadata:
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
     react-native-orientation-locker: ^1.6.0
-    react-native-permissions: ^3.8.4
+    react-native-permissions: ^4.1.5
     react-native-qrcode-svg: ^6.2.0
     react-native-safe-area-context: ^3.2.0
     react-native-scalable-image: ^1.1.0
@@ -18932,17 +18932,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-permissions@npm:^3.8.4":
-  version: 3.9.2
-  resolution: "react-native-permissions@npm:3.9.2"
+"react-native-permissions@npm:^4.1.5":
+  version: 4.1.5
+  resolution: "react-native-permissions@npm:4.1.5"
   peerDependencies:
-    react: ">=16.13.1"
-    react-native: ">=0.63.3"
-    react-native-windows: ">=0.62.0"
+    react: ">=18.1.0"
+    react-native: ">=0.70.0"
+    react-native-windows: ">=0.70.0"
   peerDependenciesMeta:
     react-native-windows:
       optional: true
-  checksum: 047540958d415e62ea2359f8f5da392a345cec11d7bbe14b065459375b1185431bc98ac144595b9db27376ebb059811f79d9f3c80d61508aeecc3cb5e7c49996
+  checksum: dc4b366a0f561a47f032c027eb703a2be45e801788b915ed583e38f617eea23656eb63a77b17fb3a663fe3199b2ec25788f799e751421634e35a64f5258feed9
   languageName: node
   linkType: hard
 
