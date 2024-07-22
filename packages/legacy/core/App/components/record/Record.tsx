@@ -40,10 +40,6 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
-    infoRowEven: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-    },
     infoBox: {
       width: '33%',
     },
@@ -53,7 +49,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
   })
 
   const resetShown = useCallback((): void => {
-    const newShownState = Array(fields.length).fill(showAll)
+    const newShownState = Array(fields.length + 1).fill(!showAll)
     setShown(newShownState)
     setShowAll(!showAll)
   }, [fields.length, showAll])
@@ -83,7 +79,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
                     field={attr}
                     hideFieldValue={hideFieldValues}
                     onToggleViewPressed={() => toggleShownState(index)}
-                    shown={hideFieldValues ? !!shown[index] : true}
+                    shown={hideFieldValues ? shown[index] : true}
                     hideBottomBorder={index === fields.length - 1}
                   />
                 ))}
@@ -108,9 +104,9 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
                   onPress={resetShown}
                   testID={testIdWithKey('HideAll')}
                   accessible={true}
-                  accessibilityLabel={showAll ? t('Record.ShowAll') : t('Record.HideAll')}
+                  accessibilityLabel={showAll ? t('Record.HideAll') : t('Record.ShowAll')}
                 >
-                  <Text style={ListItems.recordLink}>{showAll ? t('Record.ShowAll') : t('Record.HideAll')}</Text>
+                  <Text style={ListItems.recordLink}>{showAll ? t('Record.HideAll') : t('Record.ShowAll')}</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -132,7 +128,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
         {renderField('issued', 6)}
       </View>
 
-      <View style={styles.infoRowEven}>
+      <View style={styles.infoRow}>
         {renderField('photo_id', 7)}
         {renderField('issued', 8)}
         {renderField('expiry_date', 9)}

@@ -326,7 +326,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const footer = () => {
     return (
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: 1170 }}>
         {credentialConnectionLabel ? (
           <View
             style={{
