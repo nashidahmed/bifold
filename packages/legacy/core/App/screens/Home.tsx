@@ -56,7 +56,7 @@ const Home = () => {
     },
     badgeText: {
       color: 'white',
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: 'bold',
     },
   })
@@ -95,7 +95,7 @@ const Home = () => {
           <Text style={styles.buttonText}>Notifications</Text>
           {total != 0 && (
             <View style={styles.badgeContainer}>
-              <Text style={styles.badgeText}>{total}</Text>
+              <Text style={styles.badgeText}>{total > 9 ? '9+' : total}</Text>
             </View>
           )}
         </TouchableOpacity>
