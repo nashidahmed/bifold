@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Agent } from '@aries-framework/core'
 import { RouteProp } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'

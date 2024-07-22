@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
@@ -34,7 +33,6 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
 
   const handleCodeScan = async (value: string) => {
     setQrCodeScanError(null)
-    console.log(value)
     try {
       let uri
       let agentType = ''

@@ -54,8 +54,6 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const connection = useConnectionById(connectionId)
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
 
-  // eslint-disable-next-line no-console
-  // console.error(basicMessages)
   const credentials = useCredentialsByConnectionId(connectionId)
   const proofs = useProofsByConnectionId(connectionId)
   const isFocused = useIsFocused()
@@ -273,8 +271,6 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
 
   const onSend = useCallback(
     async (messages: IMessage[]) => {
-      // eslint-disable-next-line no-console
-      // console.error(messages)
       await agent?.basicMessages.sendMessage(connectionId, messages[0].text)
     },
     [agent, connectionId]

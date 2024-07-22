@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { LocalStorageKeys } from '../../constants'
@@ -558,8 +557,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
           infrastructure: [...state.agent.infrastructure, value],
         },
       }
-      console.log('############################################################')
-      console.log(state.agent)
       AsyncStorage.setItem(LocalStorageKeys.Agent, JSON.stringify(newState.agent))
       return newState
     }

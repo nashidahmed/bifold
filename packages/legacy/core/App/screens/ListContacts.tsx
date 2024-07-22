@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { ConnectionRecord, ConnectionType } from '@aries-framework/core'
 import { useConnections } from '@aries-framework/react-hooks'
 import { RouteProp } from '@react-navigation/native'
@@ -41,7 +40,6 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
   const [store] = useStore()
   // Filter out mediator agents
   let connections: ConnectionRecord[] = records
-  console.log(store.agent)
   if (!store.preferences.developerModeEnabled) {
     if (serviceName == 'Infrastructure') {
       connections = records.filter((r) => [...store.agent.infrastructure].includes(r.id))

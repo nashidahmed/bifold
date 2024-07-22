@@ -60,8 +60,7 @@ const Home = () => {
       fontWeight: 'bold',
     },
   })
-  // eslint-disable-next-line no-console
-  console.warn(total != 0)
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>

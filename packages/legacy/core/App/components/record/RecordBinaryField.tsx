@@ -20,8 +20,6 @@ const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, s
   const [showImageModal, setShowImageModal] = useState(false)
 
   // const actualValue = attributeValue === '*' ? Default : attributeValue
-  // eslint-disable-next-line no-console
-  // console.log(actualValue)
 
   const styles = StyleSheet.create({
     text: {
