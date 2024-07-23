@@ -7,7 +7,7 @@ import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
 interface QRRendererProps {
-  value: string
+  value?: string
   size?: number
   style?: ViewStyle
   onError?: () => void

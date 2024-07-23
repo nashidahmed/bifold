@@ -22,7 +22,7 @@ import { testIdWithKey } from '../utils/testable'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
-const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
+const ContactDetails: React.FC<ContactDetailsProps> = ({ route }, serviceName) => {
   // eslint-disable-next-line no-unsafe-optional-chaining
   const { connectionId } = route?.params
   const { agent } = useAgent()
@@ -62,7 +62,10 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
 
       await agent.connections.deleteById(connection.id)
 
-      // navigation.navigate(Screens.Contacts)
+      navigation.getParent()?.navigate(Stacks.ContactStack, {
+        screen: Screens.Contacts,
+        params: { navigation: navigation, serviceName: serviceName },
+      })
 
       // FIXME: This delay is a hack so that the toast doesn't appear until the modal is dismissed
       await new Promise((resolve) => setTimeout(resolve, 1000))

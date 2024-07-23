@@ -39,7 +39,7 @@ const ContactStack: React.FC = () => {
         //   headerRight: () => <CredentialListHeaderRight />,
         //   // headerLeft: () => <SettingsMenu />,
         // }}
-        options={({ route }) => ({ title: route.params?.serviceName || 'Contacts' })} // Set title dynamically based on route params
+        options={({ route }) => ({ title: route.params?.serviceName || 'Vehicles' })} // Set title dynamically based on route params
       />
       <Stack.Screen
         name={Screens.ContactDetails}

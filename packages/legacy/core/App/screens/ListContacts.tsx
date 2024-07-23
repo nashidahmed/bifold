@@ -98,7 +98,9 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
         data={connections.filter((r) => store.agent.infrastructure.includes(r.id))}
         ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
         keyExtractor={(connection) => connection.id}
-        renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
+        renderItem={({ item: connection }) => (
+          <ContactListItem contact={connection} navigation={navigation} serviceName="Infrastructure" />
+        )}
         ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
       />
     </View>
@@ -112,7 +114,9 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
         data={connections.filter((r) => store.agent.ca.includes(r.id))}
         ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
         keyExtractor={(connection) => connection.id}
-        renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
+        renderItem={({ item: connection }) => (
+          <ContactListItem contact={connection} navigation={navigation} serviceName="CA" />
+        )}
         ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
       />
     </View>
@@ -123,7 +127,9 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
         data={connections}
         ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
         keyExtractor={(connection) => connection.id}
-        renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
+        renderItem={({ item: connection }) => (
+          <ContactListItem contact={connection} navigation={navigation} serviceName="" />
+        )}
         ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
       />
     </View>

@@ -43,10 +43,10 @@ const Home = () => {
     },
     badgeContainer: {
       position: 'absolute',
-      top: 5,
-      right: 5,
-      // top: '35%',
-      // right: '40%',
+      // top: 5,
+      // right: 5,
+      top: '25%',
+      right: '40%',
       backgroundColor: 'red',
       width: 30,
       height: 30,
@@ -108,8 +108,8 @@ const Home = () => {
               ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
           }
         >
-          <Icon name="contacts-outline" color="#1C6DA5" size={80} />
-          <Text style={styles.buttonText}>Contacts</Text>
+          <Icon name="car" color="#1C6DA5" size={80} />
+          <Text style={styles.buttonText}>Vehicles</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}

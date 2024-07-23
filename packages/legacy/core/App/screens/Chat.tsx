@@ -46,7 +46,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     throw new Error('Chat route params were not set properly')
   }
 
-  const { connectionId } = route.params
+  const { connectionId, serviceName } = route.params
   const [store] = useStore()
   const { t } = useTranslation()
   const { agent } = useAgent()
@@ -75,7 +75,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   useEffect(() => {
     navigation.setOptions({
       title: theirLabel,
-      headerRight: () => <InfoIcon connectionId={connection?.id as string} />,
+      headerRight: () => <InfoIcon connectionId={connection?.id as string} serviceName={serviceName} />,
     })
   }, [connection, theirLabel])
 
