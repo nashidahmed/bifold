@@ -125,7 +125,12 @@ const Home = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen })}
+          onPress={() =>
+            navigation.getParent()?.navigate(Stacks.SettingStack, {
+              screen: Screens.Onboarding,
+              params: { pageName: 'About' },
+            })
+          }
         >
           <Icon name="alert-circle-outline" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>About</Text>

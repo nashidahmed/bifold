@@ -89,7 +89,7 @@ export type TabStackParams = {
 
 export type AuthenticateStackParams = {
   [Screens.Preface]: undefined
-  [Screens.Onboarding]: undefined
+  [Screens.Onboarding]: { pageName?: string }
   [Screens.Terms]: undefined
   [Screens.AttemptLockout]: undefined
   [Screens.CreatePIN]: { setAuthenticated: (status: boolean) => void } | undefined
@@ -99,7 +99,7 @@ export type AuthenticateStackParams = {
 }
 
 export type OnboardingStackParams = {
-  [Screens.Onboarding]: undefined
+  [Screens.Onboarding]: { pageName?: string }
   [Screens.Developer]: undefined
 }
 
@@ -165,7 +165,7 @@ export type SettingStackParams = {
   [Screens.UseBiometry]: undefined
   [Screens.CreatePIN]: undefined
   [Screens.Terms]: undefined
-  [Screens.Onboarding]: undefined
+  [Screens.Onboarding]: { pageName?: string }
   [Screens.Developer]: undefined
 }
 

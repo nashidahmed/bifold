@@ -12,7 +12,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { GenericFn } from '../types/fn'
-import { OnboardingStackParams, Screens } from '../types/navigators'
+import { OnboardingStackParams, Screens, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import { OnboardingStyleSheet } from './Onboarding'
@@ -88,8 +88,11 @@ const createImageDisplayOptions = (OnboardingTheme: any) => {
 
 const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
   const { t } = useTranslation()
+  const [store] = useStore()
+  const navigation = useNavigation()
   const styles = createStyles(OnboardingTheme)
   const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
+
   return (
     <>
       <ScrollView style={{ padding: 20 }}>
@@ -111,7 +114,11 @@ const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
           title={t('Global.GetStarted')}
           accessibilityLabel={t('Global.GetStarted')}
           testID={testIdWithKey('GetStarted')}
-          onPress={onTutorialCompleted}
+          onPress={() =>
+            store.onboarding.didCompleteTutorial
+              ? navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Home })
+              : onTutorialCompleted()
+          }
           buttonType={ButtonType.Primary}
         />
       </View>
