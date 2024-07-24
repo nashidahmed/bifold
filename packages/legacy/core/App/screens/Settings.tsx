@@ -95,20 +95,66 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   // }
 
   const settingsSections: SettingSection[] = [
+    // {
+    //   header: {
+    //     icon: { name: store.preferences.useConnectionInviterCapability ? 'person' : 'apartment', size: 30 },
+    //     title: store.preferences.useConnectionInviterCapability ? store.preferences.walletName : t('Screens.Contacts'),
+    //     iconRight: {
+    //       name: 'edit',
+    //       action: () => {
+    //         navigation.navigate(Screens.NameWallet)
+    //       },
+    //       accessibilityLabel: t('NameWallet.EditWalletName'),
+    //       testID: testIdWithKey('EditWalletName'),
+    //       style: { color: ColorPallet.brand.primary },
+    //     },
+    //     titleTestID: store.preferences.useConnectionInviterCapability ? testIdWithKey('WalletName') : undefined,
+    //   },
+    //   data: [
+    //     {
+    //       title: t('Screens.CA'),
+    //       accessibilityLabel: t('Screens.CA'),
+    //       testID: testIdWithKey('CA'),
+    //       onPress: () =>
+    //         navigation.getParent()?.navigate(Stacks.ContactStack, {
+    //           screen: Screens.Contacts,
+    //           params: { navigation: navigation, serviceName: 'CA' },
+    //         }),
+    //     },
+    //     {
+    //       title: t('Screens.Scan'),
+    //       accessibilityLabel: t('Screens.Scan'),
+    //       testID: testIdWithKey('Scan'),
+    //       onPress: () => navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan }),
+    //       value: undefined,
+    //     },
+    //     // {
+    //     //   title: t('Settings.QRCodeGen'),
+    //     //   accessibilityLabel: t('Settings.QRCodeGen'),
+    //     //   testID: testIdWithKey('QRCodeGen'),
+    //     //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen }),
+    //     //   value: undefined,
+    //     // },
+    //     // {
+    //     //   title: t('Settings.ScanBLE'),
+    //     //   accessibilityLabel: t('Settings.ScanBLE'),
+    //     //   testID: testIdWithKey('ScanBLE'),
+    //     //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ScanBLE }),
+    //     //   value: undefined,
+    //     // },
+    //     // {
+    //     //   title: t('Screens.ProofRequestDetails'),
+    //     //   accessibilityLabel: t('Screens.ProofRequestDetails'),
+    //     //   testID: testIdWithKey('ProofRequestDetails'),
+    //     //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ProofRequestDetails }),
+    //     //   value: undefined,
+    //     // },
+    //   ],
+    // },
     {
       header: {
-        icon: { name: store.preferences.useConnectionInviterCapability ? 'person' : 'apartment', size: 30 },
-        title: store.preferences.useConnectionInviterCapability ? store.preferences.walletName : t('Screens.Contacts'),
-        iconRight: {
-          name: 'edit',
-          action: () => {
-            navigation.navigate(Screens.NameWallet)
-          },
-          accessibilityLabel: t('NameWallet.EditWalletName'),
-          testID: testIdWithKey('EditWalletName'),
-          style: { color: ColorPallet.brand.primary },
-        },
-        titleTestID: store.preferences.useConnectionInviterCapability ? testIdWithKey('WalletName') : undefined,
+        icon: { name: 'settings' },
+        title: t('Settings.AppSettings'),
       },
       data: [
         {
@@ -128,35 +174,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () => navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan }),
           value: undefined,
         },
-        // {
-        //   title: t('Settings.QRCodeGen'),
-        //   accessibilityLabel: t('Settings.QRCodeGen'),
-        //   testID: testIdWithKey('QRCodeGen'),
-        //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen }),
-        //   value: undefined,
-        // },
-        // {
-        //   title: t('Settings.ScanBLE'),
-        //   accessibilityLabel: t('Settings.ScanBLE'),
-        //   testID: testIdWithKey('ScanBLE'),
-        //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ScanBLE }),
-        //   value: undefined,
-        // },
-        // {
-        //   title: t('Screens.ProofRequestDetails'),
-        //   accessibilityLabel: t('Screens.ProofRequestDetails'),
-        //   testID: testIdWithKey('ProofRequestDetails'),
-        //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ProofRequestDetails }),
-        //   value: undefined,
-        // },
-      ],
-    },
-    {
-      header: {
-        icon: { name: 'settings' },
-        title: t('Settings.AppSettings'),
-      },
-      data: [
         {
           title: t('Global.Biometrics'),
           value: store.preferences.useBiometry ? t('Global.On') : t('Global.Off'),
