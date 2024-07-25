@@ -92,7 +92,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   }, [basicMessages])
 
   useEffect(() => {
-    const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: BasicMessageRecord) => {
+    const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: BasicMessageRecord, index) => {
       const role = getMessageEventRole(record)
       // eslint-disable-next-line
       const linkRegex = /(?:https?\:\/\/\w+(?:\.\w+)+\S*)|(?:[\w\d\.\_\-]+@\w+(?:\.\w+)+)/gm
@@ -123,13 +123,13 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
                 </React.Fragment>
               )
             }
-            return <Text>{split}</Text>
+            return <Text key={i}>{split}</Text>
           })}
         </Text>
       )
 
       return {
-        _id: record.id,
+        _id: record.id || index.toString(),
         text: record.content,
         renderEvent: () => msgText,
         createdAt: record.updatedAt || record.createdAt,
@@ -163,13 +163,13 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     }
 
     transformedMessages.push(
-      ...credentials.map((record: CredentialExchangeRecord) => {
+      ...credentials.map((record: CredentialExchangeRecord, index) => {
         const role = getCredentialEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getCredentialEventLabel(record) as any)
 
         return {
-          _id: record.id,
+          _id: record.id || `credential-${index}`,
           text: actionLabel,
           renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
           createdAt: record.updatedAt || record.createdAt,
@@ -201,13 +201,13 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     )
 
     transformedMessages.push(
-      ...proofs.map((record: ProofExchangeRecord) => {
+      ...proofs.map((record: ProofExchangeRecord, index) => {
         const role = getProofEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getProofEventLabel(record) as any)
 
         return {
-          _id: record.id,
+          _id: record.id || `proof-${index}`,
           text: actionLabel,
           renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
           createdAt: record.updatedAt || record.createdAt,

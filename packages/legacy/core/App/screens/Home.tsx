@@ -43,8 +43,6 @@ const Home = () => {
     },
     badgeContainer: {
       position: 'absolute',
-      // top: 5,
-      // right: 5,
       top: '25%',
       right: '40%',
       backgroundColor: 'red',
@@ -61,34 +59,37 @@ const Home = () => {
     },
   })
 
+  const navigateToScreen = (stack: Stacks, screen: Screens, params = {}) => {
+    navigation.getParent()?.navigate(stack, { screen, params })
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.getParent()?.navigate(Stacks.CredentialStack, { screen: Screens.Credentials })}
+          onPress={() => navigateToScreen(Stacks.CredentialStack, Screens.Credentials)}
         >
           <Icon name="wallet-outline" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Credentials</Text>
         </TouchableOpacity>
-        {/* card-account-details-outline */}
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ScanBLE })}
+          onPress={() => navigateToScreen(Stacks.ContactStack, Screens.ScanBLE)}
         >
           <Icon name="bluetooth" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Bluetooth</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen })}
+          onPress={() => navigateToScreen(Stacks.ContactStack, Screens.QRCodeGen)}
         >
           <Icon name="qrcode" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Generate QR</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.getParent()?.navigate(Stacks.NotificationStack, { screen: Screens.Notification })}
+          onPress={() => navigateToScreen(Stacks.NotificationStack, Screens.Notification)}
         >
           <Icon name="bell-outline" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Notifications</Text>
@@ -102,11 +103,7 @@ const Home = () => {
       <View style={styles.row}>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() =>
-            navigation
-              .getParent()
-              ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
-          }
+          onPress={() => navigateToScreen(Stacks.ContactStack, Screens.Contacts, { navigation })}
         >
           <Icon name="car" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Vehicles</Text>
@@ -114,10 +111,7 @@ const Home = () => {
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() =>
-            navigation.getParent()?.navigate(Stacks.ContactStack, {
-              screen: Screens.Contacts,
-              params: { navigation: navigation, serviceName: 'Infrastructure' },
-            })
+            navigateToScreen(Stacks.ContactStack, Screens.Contacts, { navigation, serviceName: 'Infrastructure' })
           }
         >
           <Icon name="domain" color="#1C6DA5" size={80} />
@@ -125,24 +119,18 @@ const Home = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() =>
-            navigation.getParent()?.navigate(Stacks.SettingStack, {
-              screen: Screens.Onboarding,
-              params: { pageName: 'About' },
-            })
-          }
+          onPress={() => navigateToScreen(Stacks.SettingStack, Screens.Onboarding, { pageName: 'About' })}
         >
           <Icon name="alert-circle-outline" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>About</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.getParent()?.navigate(Stacks.SettingStack, { screen: Screens.Settings })}
+          onPress={() => navigateToScreen(Stacks.SettingStack, Screens.Settings)}
         >
           <Icon name="cogs" color="#1C6DA5" size={80} />
           <Text style={styles.buttonText}>Settings</Text>
         </TouchableOpacity>
-        {/* cog-outline */}
       </View>
     </View>
   )

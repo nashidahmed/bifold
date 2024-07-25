@@ -561,7 +561,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                         : undefined
                     }
                     proof={true}
-                  ></CredentialCard>
+                  />
                 </View>
               )}
             </View>
