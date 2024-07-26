@@ -32,6 +32,7 @@ interface CredentialCard11Props {
   proof?: boolean
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
+  fixedHeight?: boolean
 }
 
 /*
@@ -77,6 +78,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   proof,
   hasAltCredentials,
   handleAltCredChange,
+  fixedHeight,
 }) => {
   const { width, height } = useWindowDimensions()
   const cardWidth = 0.475 * width
@@ -130,16 +132,19 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     container: {
       backgroundColor: '#113B51', //hardcode overlay.brandingOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
-      height: cardHeight,
+      minHeight: cardHeight,
+      // minHeight: fixedHeight ? cardHeight * 2.05 : cardHeight,
       width: cardWidth,
     },
     cardContainer: {
       flexDirection: 'row',
       // minHeight: 0.33 * width,
-      height: '100%',
+      // height: '100%',
     },
     secondaryBodyContainer: {
       width: '15%',
+      minHeight: cardHeight,
+      // minHeight: fixedHeight ? cardHeight * 2.05 : cardHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
       backgroundColor: '#0D2D3E', //hardcode getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor
@@ -147,6 +152,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     primaryBodyContainer: {
       flex: 1,
       padding,
+      paddingBottom: proof ? padding / 2 : padding,
+      paddingTop: proof ? padding / 2 : padding,
       marginLeft: -1.25 * logoHeight + padding,
     },
     imageAttr: {

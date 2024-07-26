@@ -23,6 +23,7 @@ interface CredentialCardProps {
   satisfiedPredicates?: boolean
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
+  fixedHeight?: boolean
 }
 
 const CredentialCard: React.FC<CredentialCardProps> = ({
@@ -38,6 +39,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   handleAltCredChange,
   style = {},
   onPress = undefined,
+  fixedHeight,
 }) => {
   // add ability to reference credential by ID, allows us to get past react hook restrictions
   const { OCABundleResolver } = useConfiguration()
@@ -58,6 +60,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           hasAltCredentials={hasAltCredentials}
           proof
           elevated
+          fixedHeight={fixedHeight}
         />
       )
     }

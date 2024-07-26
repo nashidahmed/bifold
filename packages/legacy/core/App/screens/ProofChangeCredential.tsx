@@ -143,13 +143,24 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
       <FlatList
         data={proofItems}
         ListHeaderComponent={listHeader}
+        numColumns={2}
         renderItem={({ item }) => {
           return (
             <View style={styles.pageMargin}>
               <TouchableOpacity
                 testID={testIdWithKey(`select:${item.credId}`)}
                 onPress={() => changeCred(item.credId ?? '')}
-                style={[item.credId === selectedCred ? styles.selectedCred : undefined, { marginBottom: 10 }]}
+                style={[
+                  item.credId === selectedCred
+                    ? styles.selectedCred
+                    : {
+                        marginBottom: 10,
+                        borderWidth: 5,
+                        borderRadius: 15,
+                        borderColor: ColorPallet.brand.primaryBackground,
+                      },
+                  { marginHorizontal: -10 },
+                ]}
               >
                 <CredentialCard
                   credential={item.credExchangeRecord}
@@ -163,7 +174,8 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                   existsInWallet={true}
                   satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                   proof={true}
-                ></CredentialCard>
+                  fixedHeight={true}
+                />
               </TouchableOpacity>
             </View>
           )
