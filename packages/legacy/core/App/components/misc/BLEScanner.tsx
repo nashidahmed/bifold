@@ -172,9 +172,15 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    BleManager.start({ showAlert: false }).catch((error) => {
-      console.error('BleManager initialization error:', error)
-    })
+    BleManager.start({ showAlert: false })
+      .then(() => {
+        startAdvertising().then(() => {
+          startScan()
+        })
+      })
+      .catch((error) => {
+        console.error('BleManager initialization error:', error)
+      })
 
     const stopListener = bleManagerEmitter.addListener('BleManagerStopScan', () => {
       setIsScanning(false)
@@ -184,9 +190,6 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     const updateListener = bleManagerEmitter.addListener('BleManagerDidUpdateState', handleBleManagerDidUpdateState)
     const discoverListener = bleManagerEmitter.addListener('BleManagerDiscoverPeripheral', handleDiscoverPeripheral)
     const readListener = bleAdvertiseEmitter.addListener('onRead', handleRead)
-    BleManager.checkState()
-    startAdvertising()
-    startScan()
 
     return () => {
       updateListener.remove()
