@@ -49,7 +49,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
   })
 
   const resetShown = useCallback((): void => {
-    const newShownState = Array(fields.length + 1).fill(!showAll)
+    const newShownState = Array(fields.length).fill(!showAll)
     setShown(newShownState)
     setShowAll(!showAll)
   }, [fields.length, showAll])
@@ -114,24 +114,22 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
         </RecordHeader>
       )}
 
-      <View style={styles.infoBoxWide}>{renderField('owner_address', 0)}</View>
-
       <View style={styles.infoRow}>
-        {renderField('vin', 1)}
-        {renderField('vehicle_owner', 2)}
-        {renderField('vehicle_information', 3)}
+        {renderField('vin', 0)}
+        {renderField('vehicle_information', 1)}
+        {renderField('registration_number', 2)}
       </View>
 
       <View style={styles.infoRow}>
-        {renderField('state_issued', 4)}
-        {renderField('registration_number', 5)}
-        {renderField('issued', 6)}
+        {renderField('state_issued', 3)}
+        {renderField('issued', 4)}
+        {renderField('expiry_date', 5)}
       </View>
 
       <View style={styles.infoRow}>
-        {renderField('photo_id', 7)}
-        {renderField('issued', 8)}
-        {renderField('expiry_date', 9)}
+        {renderField('photo_id', 6)}
+        {renderField('vehicle_owner', 7)}
+        {renderField('owner_address', 8)}
       </View>
     </>
   )
