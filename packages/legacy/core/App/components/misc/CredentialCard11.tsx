@@ -78,7 +78,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   proof,
   hasAltCredentials,
   handleAltCredChange,
-  fixedHeight,
+  // fixedHeight,
 }) => {
   const { width, height } = useWindowDimensions()
   const cardWidth = 0.475 * width
@@ -204,8 +204,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
       flexShrink: 1,
     },
+    colonText: {
+      ...TextTheme.normal,
+      fontSize: 14,
+      // color: ListItems.proofError.color,
+    },
     errorText: {
       ...TextTheme.normal,
+      fontSize: 14,
+      marginLeft: 5,
       color: ListItems.proofError.color,
     },
     errorIcon: {
@@ -387,6 +394,14 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 size={ListItems.recordAttributeText.fontSize}
               />
               <AttributeLabel label={label} />
+              {item?.satisfied != undefined && item?.satisfied === false ? (
+                <>
+                  <Text style={[styles.colonText]}>:</Text>
+                  <Text style={[styles.errorText]} numberOfLines={1}>
+                    {t('ProofRequest.PredicateNotSatisfied')}
+                  </Text>
+                </>
+              ) : null}
             </View>
           ) : (
             <AttributeLabel label={label} />
@@ -404,11 +419,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
             </View>
           )}
-          {item?.satisfied != undefined && item?.satisfied === false ? (
+          {/* {item?.satisfied != undefined && item?.satisfied === false ? (
             <Text style={[styles.errorText]} numberOfLines={1}>
               {t('ProofRequest.PredicateNotSatisfied')}
             </Text>
-          ) : null}
+          ) : null} */}
         </View>
       )
     )

@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  useWindowDimensions,
   View,
 } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
@@ -32,6 +33,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store /*, dispatch*/] = useStore()
   // const developerOptionCount = useRef(0)
+  const { width } = useWindowDimensions()
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const { settings, enableTours } = useConfiguration()
   const defaultIconSize = 24
@@ -377,8 +379,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           },
         }) => <SectionHeader icon={icon} iconRight={iconRight} title={title} titleTestID={titleTestID} />}
         ItemSeparatorComponent={() => (
-          <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
-            <View style={[styles.itemSeparator]}></View>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View
+              style={{
+                width: width - 50,
+                borderWidth: 1,
+                borderColor: ColorPallet.grayscale.lightGrey,
+              }}
+            />
           </View>
         )}
         SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}

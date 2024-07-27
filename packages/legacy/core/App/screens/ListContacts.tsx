@@ -41,7 +41,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
   // Filter out mediator agents
   let connections: ConnectionRecord[] = records
   if (!store.preferences.developerModeEnabled) {
-    if (serviceName == 'Infrastructure') {
+    if (serviceName == 'Infrastructures') {
       connections = records.filter((r) => [...store.agent.infrastructure].includes(r.id))
     } else if (serviceName == 'CA') {
       connections = records.filter((r) => [...store.agent.ca].includes(r.id))
@@ -88,7 +88,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
     }
   }, [store.preferences.useConnectionInviterCapability])
 
-  return serviceName == 'Infrastructure' ? (
+  return serviceName == 'Infrastructures' ? (
     <View>
       {/* <View style={{ padding: 20 }}>
         <Text style={[TextTheme.label]}>{t('Contacts.'Infrastructure')}</Text>
@@ -99,7 +99,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
         ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
         keyExtractor={(connection) => connection.id}
         renderItem={({ item: connection }) => (
-          <ContactListItem contact={connection} navigation={navigation} serviceName="Infrastructure" />
+          <ContactListItem contact={connection} navigation={navigation} serviceName="Infrastructures" />
         )}
         ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
       />

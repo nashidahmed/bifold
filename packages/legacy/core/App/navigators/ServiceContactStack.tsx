@@ -34,7 +34,7 @@ const ServiceContactStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Contacts}
         component={ListContacts}
-        initialParams={{ serviceName: 'Infrastructure' }}
+        initialParams={{ serviceName: 'Infrastructures' }}
         // options={{
         //   title: ''Infrastructure',
         //   headerRight: () => <CredentialListHeaderRight />,

@@ -111,11 +111,11 @@ const Home = () => {
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() =>
-            navigateToScreen(Stacks.ContactStack, Screens.Contacts, { navigation, serviceName: 'Infrastructure' })
+            navigateToScreen(Stacks.ContactStack, Screens.Contacts, { navigation, serviceName: 'Infrastructures' })
           }
         >
           <Icon name="domain" color="#1C6DA5" size={80} />
-          <Text style={styles.buttonText}>Infrastructure</Text>
+          <Text style={styles.buttonText}>Infrastructures</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}

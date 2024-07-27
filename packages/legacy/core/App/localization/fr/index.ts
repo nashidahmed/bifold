@@ -394,7 +394,7 @@ const translation = {
         "ConnectionInvitation": "Invitation de connexion",
         "ScanQR": "Show this QR code to the other person (FR)",
         "ScanQRComment": "After the QR code is scanned, a connection will be created. (FR)",
-        "ShareQR": "Sharing this QR code with someone will add them as a Contact. (FR)",
+        "ShareQR": "Share this QR code with someone to be connected with. (FR)",
         "MakingConnection": "Faire le lien...",
         "ConnectionCompleted": "Connexion terminée !",
         "Toggle": "Basculer la capacité d'invitation à la connexion",

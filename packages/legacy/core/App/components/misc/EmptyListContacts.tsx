@@ -10,6 +10,7 @@ export interface EmptyListProps {
 
 const EmptyListContacts: React.FC<EmptyListProps> = ({ serviceName }) => {
   const { t } = useTranslation()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { ListItems, Assets, ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
@@ -34,7 +35,7 @@ const EmptyListContacts: React.FC<EmptyListProps> = ({ serviceName }) => {
 
   return (
     <View style={styles.container}>
-      <Assets.svg.contactBook fill={ListItems.emptyList.color} height={120} />
+      {/* <Assets.svg.contactBook fill={ListItems.emptyList.color} height={120} /> */}
       {/* <Text style={[TextTheme.headingThree, styles.text, { marginTop: 30 }]}>{t('Contacts.EmptyList')}</Text> */}
       <Text style={[TextTheme.headingThree, styles.text, { marginTop: 30 }]}> Your {serviceName}'s list is empty</Text>
       <Text style={[ListItems.emptyList, styles.text]}>{t('Contacts.PeopleAndOrganizations')}</Text>

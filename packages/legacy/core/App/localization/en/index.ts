@@ -240,7 +240,7 @@ const translation = {
   "ScanBLE": {
     "Connect": "Connect",
     "BluetoothText": "Please turn on Bluetooth to continue.",
-    "Text1": "Ensure Bluetooth is enabled on both devices. Use the button below to scan for available devices and send and invitation to connect.",
+    "Text1": "Ensure Bluetooth is enabled on both devices. Use the button below to scan for available devices and send an invitation to connect.",
     "Text2": "Available Devices",
     "Text3": "No devices found",
     "Toggle": "Toggle Bluetooth discovery",
@@ -398,7 +398,7 @@ const translation = {
     "ConnectionInvitation": "Connection Invitation",
     "ScanQR": "Show this QR code to the other person",
     "ScanQRComment": "After the QR code is scanned, a connection will be created.",
-    "ShareQR": "Sharing this QR code with someone will add them as a Contact.",
+    "ShareQR": "Share this QR code with someone to be connected with.",
     "MakingConnection": "Making connection...",
     "ConnectionCompleted": "Connection completed!",
     "Toggle": "Toggle Connection Inviter Capability",
