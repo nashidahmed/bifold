@@ -16,9 +16,17 @@ export interface RecordProps {
   fields: Field[]
   hideFieldValues?: boolean
   field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
+  isOffer?: boolean
 }
 
-const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null }) => {
+const Record: React.FC<RecordProps> = ({
+  header,
+  footer,
+  fields,
+  hideFieldValues = false,
+  field = null,
+  isOffer = false,
+}) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>(Array(fields.length).fill(false))
   const [showAll, setShowAll] = useState<boolean>(false)
@@ -95,7 +103,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
         <RecordHeader>
           {header()}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            {footer && <RecordFooter>{footer()}</RecordFooter>}
+            {!isOffer && footer && <RecordFooter>{footer()}</RecordFooter>}
             {hideFieldValues && (
               <View style={styles.linkContainer}>
                 <TouchableOpacity
@@ -131,6 +139,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
         {renderField('vehicle_owner', 7)}
         {renderField('owner_address', 8)}
       </View>
+      {isOffer && footer && <RecordFooter>{footer()}</RecordFooter>}
     </>
   )
 }
