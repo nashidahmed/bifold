@@ -29,8 +29,11 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundleResolver } = useConfiguration()
   const { i18n } = useTranslation()
-  const { width } = useWindowDimensions()
-  const logoHeight = width * 0.12
+  const { width, height } = useWindowDimensions()
+  const cardWidth = 0.475 * width
+  const cardHeight = 0.25 * height
+  const logoHeight = cardHeight * 0.6
+
   const padding = width * 0.05
   const borderRadius = 10
   const styles = StyleSheet.create({
@@ -38,19 +41,22 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
       marginBottom: 20,
       backgroundColor: ColorPallet.grayscale.white,
       borderRadius: borderRadius,
+      minHeight: cardHeight,
+      width: cardWidth,
     },
     cardContainer: {
       flexDirection: 'row',
-      minHeight: 0.33 * width,
+      // minHeight: 0.33 * width,
     },
     cardColorContainer: {
-      width: logoHeight,
+      width: '15%',
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
+      minHeight: cardHeight,
     },
     logoContainer: {
-      top: padding,
-      left: -1 * logoHeight + padding,
+      top: cardHeight * 0.2,
+      left: -1.1 * logoHeight + padding,
       width: logoHeight,
       height: logoHeight,
       backgroundColor: ColorPallet.grayscale.white,
@@ -63,9 +69,13 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
       width: '65%',
       paddingTop: 20,
       paddingBottom: 10,
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
     },
     attributeContainer: {
       marginBottom: 10,
+      textAlign: 'left',
     },
     attributeName: {
       fontSize: 16,
