@@ -19,7 +19,7 @@ const EmptyListContacts: React.FC<EmptyListProps> = ({ serviceName }) => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: 40,
-      paddingTop: 100,
+      paddingTop: 250,
       backgroundColor: ColorPallet.brand.primaryBackground,
     },
     text: {

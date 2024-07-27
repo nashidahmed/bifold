@@ -101,7 +101,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
         renderItem={({ item: connection }) => (
           <ContactListItem contact={connection} navigation={navigation} serviceName="Infrastructures" />
         )}
-        ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
+        ListEmptyComponent={() => <EmptyListContacts serviceName="infrastructure" />}
       />
     </View>
   ) : serviceName == 'CA' ? (
@@ -117,7 +117,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
         renderItem={({ item: connection }) => (
           <ContactListItem contact={connection} navigation={navigation} serviceName="CA" />
         )}
-        ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
+        ListEmptyComponent={() => <EmptyListContacts serviceName="CA" />}
       />
     </View>
   ) : (
@@ -130,7 +130,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
         renderItem={({ item: connection }) => (
           <ContactListItem contact={connection} navigation={navigation} serviceName="" />
         )}
-        ListEmptyComponent={() => <EmptyListContacts serviceName={serviceName} />}
+        ListEmptyComponent={() => <EmptyListContacts serviceName="vehicle" />}
       />
     </View>
   )
