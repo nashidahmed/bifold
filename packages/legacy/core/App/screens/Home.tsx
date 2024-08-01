@@ -70,28 +70,28 @@ const Home = () => {
           style={styles.buttonContainer}
           onPress={() => navigateToScreen(Stacks.CredentialStack, Screens.Credentials)}
         >
-          <Icon name="wallet-outline" color="#1C6DA5" size={80} />
+          <Icon name="wallet-outline" color="#1C6DA5" size={100} />
           <Text style={styles.buttonText}>Credentials</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigateToScreen(Stacks.ContactStack, Screens.ScanBLE)}
         >
-          <Icon name="bluetooth" color="#1C6DA5" size={80} />
+          <Icon name="bluetooth" color="#1C6DA5" size={100} />
           <Text style={styles.buttonText}>Bluetooth</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigateToScreen(Stacks.ContactStack, Screens.QRCodeGen)}
         >
-          <Icon name="qrcode" color="#1C6DA5" size={80} />
-          <Text style={styles.buttonText}>Generate QR</Text>
+          <Icon name="qrcode" color="#1C6DA5" size={100} />
+          <Text style={styles.buttonText}>QR Generator</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigateToScreen(Stacks.NotificationStack, Screens.Notification)}
         >
-          <Icon name="bell-outline" color="#1C6DA5" size={80} />
+          <Icon name="bell-outline" color="#1C6DA5" size={100} />
           <Text style={styles.buttonText}>Notifications</Text>
           {total != 0 && (
             <View style={styles.badgeContainer}>
@@ -105,7 +105,7 @@ const Home = () => {
           style={styles.buttonContainer}
           onPress={() => navigateToScreen(Stacks.ContactStack, Screens.Contacts, { navigation })}
         >
-          <Icon name="car" color="#1C6DA5" size={80} />
+          <Icon name="car" color="#1C6DA5" size={100} />
           <Text style={styles.buttonText}>Vehicles</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -114,21 +114,21 @@ const Home = () => {
             navigateToScreen(Stacks.ContactStack, Screens.Contacts, { navigation, serviceName: 'Infrastructures' })
           }
         >
-          <Icon name="domain" color="#1C6DA5" size={80} />
+          <Icon name="radio-tower" color="#1C6DA5" size={100} />
           <Text style={styles.buttonText}>Infrastructures</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigateToScreen(Stacks.SettingStack, Screens.Onboarding, { pageName: 'About' })}
         >
-          <Icon name="alert-circle-outline" color="#1C6DA5" size={80} />
+          <Icon name="information-outline" color="#1C6DA5" size={100} />
           <Text style={styles.buttonText}>About</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigateToScreen(Stacks.SettingStack, Screens.Settings)}
         >
-          <Icon name="cogs" color="#1C6DA5" size={80} />
+          <Icon name="cog" color="#1C6DA5" size={100} />
           <Text style={styles.buttonText}>Settings</Text>
         </TouchableOpacity>
       </View>
