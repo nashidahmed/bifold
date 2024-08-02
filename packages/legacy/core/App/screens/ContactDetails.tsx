@@ -22,9 +22,9 @@ import { testIdWithKey } from '../utils/testable'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
-const ContactDetails: React.FC<ContactDetailsProps> = ({ route }, serviceName) => {
+const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   // eslint-disable-next-line no-unsafe-optional-chaining
-  const { connectionId } = route?.params
+  const { connectionId, serviceName } = route?.params
   const { agent } = useAgent()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<ContactStackParams>>()
