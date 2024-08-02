@@ -45,7 +45,7 @@ export const handleInvitation = async (
       // not connectionless
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
-        params: { connectionId: receivedInvitation.connectionRecord.id },
+        params: { connectionId: receivedInvitation.connectionRecord.id, agentType },
       })
     } else {
       //connectionless

@@ -34,7 +34,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   // delay message, the user should be redirected to the home screen.
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const { connectionId, threadId } = route.params
+  const { connectionId, threadId, agentType = '' } = route.params
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const connection = connectionId ? useConnectionById(connectionId) : undefined
   const { t } = useTranslation()
@@ -166,7 +166,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{ name: Stacks.HomeStack }, { name: Screens.Chat, params: { connectionId } }],
+          routes: [
+            { name: Stacks.HomeStack },
+            { name: Screens.Chat, params: { connectionId, serviceName: agentType } },
+          ],
         })
       )
 

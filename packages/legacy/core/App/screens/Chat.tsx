@@ -12,7 +12,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, Text } from 'react-native'
+import { Linking, StyleSheet, Text, View } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -22,6 +22,8 @@ import ActionSlider from '../components/chat/ActionSlider'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'
 import { ChatMessage, ExtendedChatMessage, CallbackType } from '../components/chat/ChatMessage'
+import { InfoBoxType } from '../components/misc/InfoBox'
+import PopupModal from '../components/modals/PopupModal'
 import { useNetwork } from '../contexts/network'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -46,7 +48,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     throw new Error('Chat route params were not set properly')
   }
 
-  const { connectionId, serviceName } = route.params
+  const { connectionId, serviceName = '' } = route.params
   const [store] = useStore()
   const { t } = useTranslation()
   const { agent } = useAgent()
@@ -61,7 +63,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
   const [showActionSlider, setShowActionSlider] = useState(false)
   const { ChatTheme: theme, Assets } = useTheme()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const [theirLabel, setTheirLabel] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
 
   useEffect(() => {
@@ -301,6 +303,27 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     setShowActionSlider(false)
   }
 
+  const [displayNotification, setDisplayNotification] = useState(false)
+  const style = StyleSheet.create({
+    modalText: {
+      ...TextTheme.modalNormal,
+      marginVertical: 5,
+    },
+  })
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(serviceName)
+    if (serviceName == 'infrastructure') {
+      const timer = setTimeout(() => {
+        // eslint-disable-next-line no-console
+        console.log('jkdbkfjbsbdfbsbdjfdsfsd')
+        setDisplayNotification(true)
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [serviceName])
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1, paddingTop: 20 }}>
       <GiftedChat
@@ -321,6 +344,21 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         renderActions={(props) => renderActions(props, theme, actions)}
         onPressActionButton={actions ? () => setShowActionSlider(true) : undefined}
       />
+      {displayNotification && (
+        <PopupModal
+          notificationType={InfoBoxType.Info}
+          title="Verification Done"
+          bodyContent={
+            <View>
+              <Text style={style.modalText}>You're credential is verified by the infrastructure</Text>
+            </View>
+          }
+          onCallToActionLabel={t('Global.Okay')}
+          onCallToActionPressed={() => {
+            setDisplayNotification(false)
+          }}
+        />
+      )}
       {showActionSlider && <ActionSlider onDismiss={onDismiss} actions={actions} />}
     </SafeAreaView>
   )
