@@ -6,9 +6,12 @@ import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
+import AboutCredential from '../assets/img/about-credential.svg'
+import AboutUI from '../assets/img/about-ui.svg'
 import CredentialList from '../assets/img/credential-list.svg'
 import ScanShare from '../assets/img/scan-share.svg'
 import SecureImage from '../assets/img/secure-image.svg'
+import VehicleConnected from '../assets/img/vehicle-bluetooth.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -124,7 +127,7 @@ const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
   return (
     <>
       <View style={{ alignItems: 'center' }}>
-        <SecureImage {...imageDisplayOptions} />
+        <VehicleConnected style={{ ...imageDisplayOptions }} />
       </View>
       <ScrollView style={styles.container}>
         {/* <Text style={styles.header}>Current Features</Text> */}
@@ -169,7 +172,7 @@ const guides = (OnboardingTheme: any): React.ReactElement[] => {
 
   return [
     <>
-      <View style={{ alignItems: 'center' }}>{<CredentialList style={imageDisplayOptions} />}</View>
+      <View style={{ alignItems: 'center' }}>{<AboutCredential style={imageDisplayOptions} />}</View>
       <ScrollView style={styles.container}>
         <Text style={styles.header}>About Our App</Text>
         <Text style={styles.subHeader}>Introduction:</Text>
@@ -195,7 +198,7 @@ const guides = (OnboardingTheme: any): React.ReactElement[] => {
       </ScrollView>
     </>,
     <>
-      <View style={{ alignItems: 'center' }}>{<ScanShare style={imageDisplayOptions} />}</View>
+      <View style={{ alignItems: 'center' }}>{<AboutUI style={imageDisplayOptions} />}</View>
       <ScrollView style={styles.container}>
         {/* <Text style={styles.header}>Cutting-Edge Technology</Text> */}
         <Text style={styles.subHeader}>Blockchain Technology:</Text>
