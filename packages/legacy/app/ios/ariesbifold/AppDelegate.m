@@ -25,7 +25,7 @@
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-  return [Orientation getOrientation];
+  return UIInterfaceOrientationMaskLandscape;
 }
 
 @end
