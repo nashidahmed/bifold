@@ -58,6 +58,11 @@ export interface Agent {
   ca: string[]
 }
 
+export interface ProofReqState {
+  sent: string[]
+  received: string[]
+}
+
 export interface State {
   onboarding: Onboarding
   authentication: Authentication
@@ -69,4 +74,5 @@ export interface State {
   migration: Migration
   loading: boolean
   agent: Agent
+  proofReq: ProofReqState
 }

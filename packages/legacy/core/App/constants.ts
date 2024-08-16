@@ -19,6 +19,7 @@ export enum LocalStorageKeys {
   Preferences = 'PreferencesState',
   Migration = 'MigrationState',
   Agent = 'AgentState',
+  ProofReq = 'ProofReqState',
   Tours = 'ToursState',
 }
 

@@ -11,6 +11,7 @@ import {
   Migration as MigrationState,
   State,
   Agent as AgentState,
+  ProofReqState,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 
@@ -75,6 +76,11 @@ enum AgentDispatchAction {
   ADD_AGENTS = 'agent/addAgents',
 }
 
+enum ProofReqDispatchAction {
+  PR_Sent = 'proofReq/proofReqSent',
+  PR_Received = 'proofReq/proofReqReceived',
+}
+
 export type DispatchAction =
   | OnboardingDispatchAction
   | LoginAttemptDispatchAction
@@ -85,6 +91,7 @@ export type DispatchAction =
   | DeepLinkDispatchAction
   | MigrationDispatchAction
   | AgentDispatchAction
+  | ProofReqDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
@@ -96,6 +103,7 @@ export const DispatchAction = {
   ...DeepLinkDispatchAction,
   ...MigrationDispatchAction,
   ...AgentDispatchAction,
+  ...ProofReqDispatchAction,
 }
 
 export interface ReducerAction<R> {
@@ -583,6 +591,30 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         },
       }
       AsyncStorage.setItem(LocalStorageKeys.Agent, JSON.stringify(newState.agent))
+      return newState
+    }
+    case ProofReqDispatchAction.PR_Sent: {
+      const value: ProofReqState = (action.payload || []).pop()
+      const newState = {
+        ...state,
+        proofReq: {
+          ...state.proofReq,
+          sent: [...state.proofReq.sent, ...value.sent],
+        },
+      }
+      AsyncStorage.setItem(LocalStorageKeys.ProofReq, JSON.stringify(newState.proofReq))
+      return newState
+    }
+    case ProofReqDispatchAction.PR_Received: {
+      const value: ProofReqState = (action.payload || []).pop()
+      const newState = {
+        ...state,
+        proofReq: {
+          ...state.proofReq,
+          received: [...state.proofReq.received, ...value.received],
+        },
+      }
+      AsyncStorage.setItem(LocalStorageKeys.ProofReq, JSON.stringify(newState.proofReq))
       return newState
     }
     default:

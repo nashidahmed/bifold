@@ -7,6 +7,7 @@ import _defaultReducer, { ReducerAction } from './reducers/store'
 
 type Reducer = <S extends State>(state: S, action: ReducerAction<any>) => S
 
+// eslint-disable-next-line import/no-named-as-default-member
 interface StoreProviderProps extends React.PropsWithChildren {
   initialState?: State
   reducer?: Reducer
@@ -65,6 +66,10 @@ export const defaultState: State = {
   agent: {
     infrastructure: [],
     ca: [],
+  },
+  proofReq: {
+    sent: [],
+    received: [],
   },
 }
 
