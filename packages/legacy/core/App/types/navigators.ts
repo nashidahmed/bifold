@@ -69,7 +69,7 @@ export enum TabStacks {
 export type RootStackParams = {
   [Screens.Splash]: undefined
   [Stacks.TabStack]: NavigatorScreenParams<TabStackParams>
-  [Screens.Chat]: { connectionId: string; serviceName: string }
+  [Screens.Chat]: { connectionId: string; serviceName: string; sendPR?: boolean }
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [Stacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
@@ -106,7 +106,7 @@ export type OnboardingStackParams = {
 export type ContactStackParams = {
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
   [Screens.Contacts]: { serviceName?: string }
-  [Screens.Chat]: { connectionId: string; serviceName: string }
+  [Screens.Chat]: { connectionId: string; serviceName: string; sendPR?: boolean }
   [Screens.ContactDetails]: { connectionId: string; serviceName: string }
   [Screens.RenameContact]: { connectionId: string }
   [Screens.SelectProofRequest]: { connectionId: string }

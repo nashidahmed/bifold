@@ -1,5 +1,6 @@
 import { DidExchangeState } from '@aries-framework/core'
-import { useConnectionById } from '@aries-framework/react-hooks'
+import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
+import { linkProofWithTemplate, sendProofRequest, useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
@@ -50,6 +51,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     shouldShowDelayMessage: false,
     connectionIsActive: false,
   })
+
+  const { agent } = useAgent()
+
+  if (!agent) {
+    throw new Error('Unable to fetch agent from AFJ')
+  }
+
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -168,10 +176,19 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           index: 1,
           routes: [
             { name: Stacks.HomeStack },
-            { name: Screens.Chat, params: { connectionId, serviceName: agentType } },
+            { name: Screens.Chat, params: { connectionId, serviceName: agentType, sendPR: true } },
           ],
         })
       )
+
+      // sendProofRequest(
+      //   agent,
+      //   useProofRequestTemplates(false, ['vehicle_information', 'vehicle_owner', 'state_issued'])[1],
+      //   connectionId,
+      //   {}
+      // ).then((result) => {
+      //   if (result?.proofRecord) linkProofWithTemplate(agent, result.proofRecord, '2')
+      // })
 
       dispatch({ isVisible: false })
       return

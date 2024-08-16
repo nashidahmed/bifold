@@ -7,10 +7,15 @@ import {
   ProofState,
 } from '@aries-framework/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@aries-framework/react-hooks'
-import { isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
+import {
+  isPresentationReceived,
+  linkProofWithTemplate,
+  sendProofRequest,
+  useProofRequestTemplates,
+} from '@hyperledger/aries-bifold-verifier'
 import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, Text, View } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
@@ -40,7 +45,6 @@ import {
   getProofEventLabel,
   getProofEventRole,
 } from '../utils/helpers'
-
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat> | StackScreenProps<RootStackParams, Screens.Chat>
 
 const Chat: React.FC<ChatProps> = ({ route }) => {
@@ -48,7 +52,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     throw new Error('Chat route params were not set properly')
   }
 
-  const { connectionId, serviceName = '' } = route.params
+  const { connectionId, serviceName = '', sendPR = false } = route.params
   const [store] = useStore()
   const { t } = useTranslation()
   const { agent } = useAgent()
@@ -65,6 +69,11 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const { ChatTheme: theme, Assets } = useTheme()
   const { ColorPallet, TextTheme } = useTheme()
   const [theirLabel, setTheirLabel] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
+  const proofSentRef = useRef(false)
+
+  if (!agent) {
+    throw new Error('Unable to fetch agent from AFJ')
+  }
 
   useEffect(() => {
     setTheirLabel(getConnectionName(connection, store.preferences.alternateContactNames))
@@ -271,6 +280,25 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     )
   }, [basicMessages, credentials, proofs, theirLabel])
 
+  const sendProof = useCallback(() => {
+    if (proofSentRef.current || !sendPR) return
+    proofSentRef.current = true
+    sendProofRequest(
+      agent,
+      useProofRequestTemplates(false, ['vehicle_information', 'vehicle_owner', 'state_issued'])[0],
+      connectionId,
+      {}
+    ).then((result) => {
+      if (result?.proofRecord) linkProofWithTemplate(agent, result.proofRecord, '1')
+    })
+  }, [sendPR, agent, connectionId])
+
+  useEffect(() => {
+    if (!proofSentRef.current) {
+      sendProof()
+    }
+  }, [])
+
   const onSend = useCallback(
     async (messages: IMessage[]) => {
       await agent?.basicMessages.sendMessage(connectionId, messages[0].text)
@@ -312,12 +340,8 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   })
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(serviceName)
     if (serviceName == 'infrastructure') {
       const timer = setTimeout(() => {
-        // eslint-disable-next-line no-console
-        console.log('jkdbkfjbsbdfbsbdjfdsfsd')
         setDisplayNotification(true)
       }, 5000)
       return () => clearTimeout(timer)
