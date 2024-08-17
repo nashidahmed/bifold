@@ -70,12 +70,17 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#113B51', //hardcode overlay.brandingOverlay?.primaryBackgroundColor,
+      // backgroundColor: '#113B51', //hardcode overlay.brandingOverlay?.primaryBackgroundColor,
+      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       display: 'flex',
     },
     secondaryHeaderContainer: {
       height: 0.8 * logoHeight,
-      backgroundColor: '#0D2D3E', //hardcode (overlay.brandingOverlay?.backgroundImage ? 'rgba(0, 0, 0, 0)' : overlay.brandingOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
+      // backgroundColor: '#0D2D3E', //hardcode (overlay.brandingOverlay?.backgroundImage ? 'rgba(0, 0, 0, 0)' : overlay.brandingOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
+      backgroundColor:
+        (overlay.brandingOverlay?.backgroundImage
+          ? 'rgba(0, 0, 0, 0)'
+          : overlay.brandingOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
     },
     primaryHeaderContainer: {
       paddingHorizontal,
