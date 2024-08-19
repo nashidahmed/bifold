@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+import { linkProofWithTemplate, sendProofRequest, useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { LocalStorageKeys } from '../../constants'
@@ -11,7 +13,7 @@ import {
   Migration as MigrationState,
   State,
   Agent as AgentState,
-  ProofReqState,
+  ProofReq as ProofReqState,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 
@@ -81,6 +83,10 @@ enum ProofReqDispatchAction {
   PR_Received = 'proofReq/proofReqReceived',
 }
 
+enum SendPRDispatchAction {
+  Send_ProofReq = 'sendPR/sendProofReq',
+}
+
 export type DispatchAction =
   | OnboardingDispatchAction
   | LoginAttemptDispatchAction
@@ -92,6 +98,7 @@ export type DispatchAction =
   | MigrationDispatchAction
   | AgentDispatchAction
   | ProofReqDispatchAction
+  | SendPRDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
@@ -104,6 +111,7 @@ export const DispatchAction = {
   ...MigrationDispatchAction,
   ...AgentDispatchAction,
   ...ProofReqDispatchAction,
+  ...SendPRDispatchAction,
 }
 
 export interface ReducerAction<R> {
@@ -595,11 +603,12 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     }
     case ProofReqDispatchAction.PR_Sent: {
       const value: ProofReqState = (action.payload || []).pop()
+      if (state.proofReq.sent.includes(JSON.stringify(value))) return state
       const newState = {
         ...state,
         proofReq: {
           ...state.proofReq,
-          sent: [...state.proofReq.sent, ...value.sent],
+          sent: [...state.proofReq.sent, value],
         },
       }
       AsyncStorage.setItem(LocalStorageKeys.ProofReq, JSON.stringify(newState.proofReq))
@@ -607,15 +616,28 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     }
     case ProofReqDispatchAction.PR_Received: {
       const value: ProofReqState = (action.payload || []).pop()
+      if (state.proofReq.received.includes(JSON.stringify(value))) return state
       const newState = {
         ...state,
         proofReq: {
           ...state.proofReq,
-          received: [...state.proofReq.received, ...value.received],
+          received: [...state.proofReq.received, value],
         },
       }
       AsyncStorage.setItem(LocalStorageKeys.ProofReq, JSON.stringify(newState.proofReq))
       return newState
+    }
+    case SendPRDispatchAction.Send_ProofReq: {
+      const [connectionId, agent] = action.payload ?? []
+      sendProofRequest(
+        agent,
+        useProofRequestTemplates(false, ['vehicle_information', 'vehicle_owner', 'state_issued'])[1],
+        connectionId,
+        {}
+      ).then((result) => {
+        if (result?.proofRecord) linkProofWithTemplate(agent, result.proofRecord, '2')
+      })
+      return state
     }
     default:
       return state

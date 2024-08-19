@@ -1,6 +1,5 @@
 import { DidExchangeState } from '@aries-framework/core'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
-import { linkProofWithTemplate, sendProofRequest, useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
@@ -11,6 +10,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useNotifications } from '../hooks/notifications'
@@ -52,6 +53,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     connectionIsActive: false,
   })
 
+  const [, storeDispatch] = useStore()
+  const proofSentRef = useRef(false)
   const { agent } = useAgent()
 
   if (!agent) {
@@ -176,10 +179,19 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           index: 1,
           routes: [
             { name: Stacks.HomeStack },
-            { name: Screens.Chat, params: { connectionId, serviceName: agentType, sendPR: true } },
+            { name: Screens.Chat, params: { connectionId, serviceName: agentType } },
           ],
         })
       )
+      // eslint-disable-next-line no-console
+      console.error('dnsadj asjdna dnsn dajnsdn asn nad ad')
+      if (!proofSentRef.current && agentType !== 'ca') {
+        storeDispatch({
+          type: DispatchAction.Send_ProofReq,
+          payload: [connectionId, agent],
+        })
+        proofSentRef.current = true
+      }
 
       // sendProofRequest(
       //   agent,

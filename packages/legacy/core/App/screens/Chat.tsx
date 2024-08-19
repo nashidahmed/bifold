@@ -1,4 +1,5 @@
 import {
+  // AutoAcceptProof,
   BasicMessageRecord,
   BasicMessageRepository,
   CredentialExchangeRecord,
@@ -7,15 +8,10 @@ import {
   ProofState,
 } from '@aries-framework/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@aries-framework/react-hooks'
-import {
-  isPresentationReceived,
-  linkProofWithTemplate,
-  sendProofRequest,
-  useProofRequestTemplates,
-} from '@hyperledger/aries-bifold-verifier'
+import { isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
 import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, Text, View } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
@@ -30,6 +26,7 @@ import { ChatMessage, ExtendedChatMessage, CallbackType } from '../components/ch
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import { useNetwork } from '../contexts/network'
+import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useCredentialsByConnectionId } from '../hooks/credentials'
@@ -52,8 +49,8 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     throw new Error('Chat route params were not set properly')
   }
 
-  const { connectionId, serviceName = '', sendPR = false } = route.params
-  const [store] = useStore()
+  const { connectionId, serviceName = '' } = route.params
+  const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { agent } = useAgent()
   const navigation = useNavigation<StackNavigationProp<RootStackParams | ContactStackParams>>()
@@ -63,16 +60,31 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const credentials = useCredentialsByConnectionId(connectionId)
   const proofs = useProofsByConnectionId(connectionId)
   const isFocused = useIsFocused()
-  const { assertConnectedNetwork, silentAssertConnectedNetwork } = useNetwork()
+  const { assertConnectedNetwork /*, silentAssertConnectedNetwork */ } = useNetwork()
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
   const [showActionSlider, setShowActionSlider] = useState(false)
   const { ChatTheme: theme, Assets } = useTheme()
   const { ColorPallet, TextTheme } = useTheme()
   const [theirLabel, setTheirLabel] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
-  const proofSentRef = useRef(false)
 
   if (!agent) {
     throw new Error('Unable to fetch agent from AFJ')
+  }
+
+  const dispatchPRState = (category: string, connectionId: string) => {
+    if (category === 'sent') {
+      if (store.proofReq.sent.includes(connectionId)) return
+      dispatch({
+        type: DispatchAction.PR_Sent,
+        payload: [connectionId],
+      })
+    } else if (category === 'received') {
+      if (store.proofReq.received.includes(connectionId)) return
+      dispatch({
+        type: DispatchAction.PR_Received,
+        payload: [connectionId],
+      })
+    }
   }
 
   useEffect(() => {
@@ -216,7 +228,11 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         const role = getProofEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getProofEventLabel(record) as any)
-
+        if (getProofEventLabel(record) == 'Chat.ProofPresentationReceived') {
+          dispatchPRState('received', record.connectionId as string)
+        } else if (getProofEventLabel(record) == 'Chat.ProofRequestSatisfied') {
+          dispatchPRState('sent', record.connectionId as string)
+        }
         return {
           _id: record.id || `proof-${index}`,
           text: actionLabel,
@@ -280,24 +296,25 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     )
   }, [basicMessages, credentials, proofs, theirLabel])
 
-  const sendProof = useCallback(() => {
-    if (proofSentRef.current || !sendPR) return
-    proofSentRef.current = true
-    sendProofRequest(
-      agent,
-      useProofRequestTemplates(false, ['vehicle_information', 'vehicle_owner', 'state_issued'])[0],
-      connectionId,
-      {}
-    ).then((result) => {
-      if (result?.proofRecord) linkProofWithTemplate(agent, result.proofRecord, '1')
-    })
-  }, [sendPR, agent, connectionId])
+  // const sendProof = useCallback(() => {
+  //   if (proofSentRef.current || !sendPR) return
+  //   proofSentRef.current = true
+  //   sendProofRequest(
+  //     agent,
+  //     useProofRequestTemplates(false, ['vehicle_information', 'vehicle_owner', 'state_issued'])[0],
+  //     connectionId,
+  //     {}
+  //     // AutoAcceptProof.Always
+  //   ).then((result) => {
+  //     if (result?.proofRecord) linkProofWithTemplate(agent, result.proofRecord, '1')
+  //   })
+  // }, [sendPR, agent, connectionId])
 
-  useEffect(() => {
-    if (!proofSentRef.current) {
-      sendProof()
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!proofSentRef.current) {
+  //     sendProof()
+  //   }
+  // }, [])
 
   const onSend = useCallback(
     async (messages: IMessage[]) => {
@@ -360,7 +377,9 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         renderInputToolbar={(props) => renderInputToolbar(props, theme)}
         renderSend={(props) => renderSend(props, theme)}
         renderComposer={(props) => renderComposer(props, theme, t('Contacts.TypeHere'))}
-        disableComposer={!silentAssertConnectedNetwork()}
+        disableComposer={
+          store.proofReq.sent.includes(connectionId) && store.proofReq.received.includes(connectionId) ? false : true
+        }
         onSend={onSend}
         user={{
           _id: Role.me,

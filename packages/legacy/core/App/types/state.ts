@@ -58,7 +58,7 @@ export interface Agent {
   ca: string[]
 }
 
-export interface ProofReqState {
+export interface ProofReq {
   sent: string[]
   received: string[]
 }
@@ -74,5 +74,5 @@ export interface State {
   migration: Migration
   loading: boolean
   agent: Agent
-  proofReq: ProofReqState
+  proofReq: ProofReq
 }
