@@ -183,8 +183,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           ],
         })
       )
-      // eslint-disable-next-line no-console
-      console.error('dnsadj asjdna dnsn dajnsdn asn nad ad')
       if (!proofSentRef.current && agentType !== 'ca') {
         storeDispatch({
           type: DispatchAction.Send_ProofReq,

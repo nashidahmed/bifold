@@ -1,6 +1,9 @@
 import React from 'react'
+import { Text, View } from 'react-native'
 import { Composer, InputToolbar, Send } from 'react-native-gifted-chat'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
+import { useTheme } from '../../contexts/theme'
 
 export const renderInputToolbar = (props: any, theme: any) => (
   <InputToolbar
@@ -44,3 +47,28 @@ export const renderSend = (props: any, theme: any) => (
     <Icon name="send" size={38} color={props.text ? theme.sendEnabled : theme.sendDisabled} />
   </Send>
 )
+
+export const renderNotVerified = (props: any) => {
+  const { ColorPallet, TextTheme } = useTheme()
+  return (
+    <View
+      {...props}
+      style={{
+        height: 50,
+        width: '100%',
+        backgroundColor: ColorPallet.grayscale.lightGrey,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Text
+        style={{
+          fontSize: TextTheme.normal.fontSize,
+          color: ColorPallet.grayscale.black,
+        }}
+      >
+        Both the sender and receiver must be verified before they can communicate with each other.
+      </Text>
+    </View>
+  )
+}

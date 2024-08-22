@@ -18,7 +18,7 @@ import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import InfoIcon from '../components/buttons/InfoIcon'
-import { renderComposer, renderInputToolbar, renderSend } from '../components/chat'
+import { renderComposer, renderInputToolbar, renderSend, renderNotVerified } from '../components/chat'
 import ActionSlider from '../components/chat/ActionSlider'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'
@@ -42,6 +42,7 @@ import {
   getProofEventLabel,
   getProofEventRole,
 } from '../utils/helpers'
+
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat> | StackScreenProps<RootStackParams, Screens.Chat>
 
 const Chat: React.FC<ChatProps> = ({ route }) => {
@@ -365,6 +366,10 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     }
   }, [serviceName])
 
+  const checkVerified = (connectionId: string) => {
+    return store.proofReq.sent.includes(connectionId) && store.proofReq.received.includes(connectionId)
+  }
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1, paddingTop: 20 }}>
       <GiftedChat
@@ -374,12 +379,12 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         renderAvatar={() => null}
         messageIdGenerator={(msg) => msg?._id.toString() || '0'}
         renderMessage={(props) => <ChatMessage key={props.currentMessage?._id} messageProps={props} />}
-        renderInputToolbar={(props) => renderInputToolbar(props, theme)}
+        renderInputToolbar={(props) =>
+          !checkVerified(connectionId) ? renderNotVerified(props) : renderInputToolbar(props, theme)
+        }
         renderSend={(props) => renderSend(props, theme)}
         renderComposer={(props) => renderComposer(props, theme, t('Contacts.TypeHere'))}
-        disableComposer={
-          store.proofReq.sent.includes(connectionId) && store.proofReq.received.includes(connectionId) ? false : true
-        }
+        disableComposer={!checkVerified(connectionId)}
         onSend={onSend}
         user={{
           _id: Role.me,
