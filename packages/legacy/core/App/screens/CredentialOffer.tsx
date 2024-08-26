@@ -8,8 +8,7 @@ import { useIsFocused } from '@react-navigation/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { DeviceEventEmitter, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
@@ -27,7 +26,7 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
-import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
+import { NotificationStackParams, Screens, Stacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
@@ -73,9 +72,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     headerText: {
       ...TextTheme.normal,
       flexShrink: 1,
-    },
-    footerButton: {
-      paddingTop: 10,
     },
   })
 
@@ -182,7 +178,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       }
 
       toggleDeclineModalVisible()
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+      navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
@@ -200,7 +196,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           </Text>
         </View>
         {!loading && credential && (
-          <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
+          <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
             <CredentialCard credential={credential} />
           </View>
         )}
@@ -213,7 +209,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       <View
         style={{
           paddingHorizontal: 25,
-          paddingVertical: 16,
+          // paddingVertical: 16,
           paddingBottom: 26,
           backgroundColor: ColorPallet.brand.secondaryBackground,
         }}
@@ -222,7 +218,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         {credentialConnectionLabel && goalCode === 'aries.vc.issue' ? (
           <ConnectionAlert connectionID={credentialConnectionLabel} />
         ) : null}
-        <View style={styles.footerButton}>
+        <View>
           <Button
             title={t('Global.Accept')}
             accessibilityLabel={t('Global.Accept')}
@@ -232,7 +228,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
             disabled={!buttonsVisible}
           />
         </View>
-        <View style={styles.footerButton}>
+        <View style={{ paddingTop: 10 }}>
           <Button
             title={t('Global.Decline')}
             accessibilityLabel={t('Global.Decline')}
@@ -247,8 +243,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
+    <ScrollView>
+      <Record fields={overlay.presentationFields || []} header={header} footer={footer} isOffer={true} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
       <CommonRemoveModal
         usage={ModalUsage.CredentialOfferDecline}
@@ -256,7 +252,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         onSubmit={handleDeclineTouched}
         onCancel={toggleDeclineModalVisible}
       />
-    </SafeAreaView>
+    </ScrollView>
   )
 }
 

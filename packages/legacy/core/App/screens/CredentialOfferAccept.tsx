@@ -10,7 +10,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
-import { Screens, TabStacks } from '../types/navigators'
+import { Screens, Stacks } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
@@ -69,11 +69,12 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   }
 
   const onBackToHomeTouched = () => {
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
   }
 
   const onDoneTouched = () => {
-    navigation.getParent()?.navigate(TabStacks.CredentialStack, { screen: Screens.Credentials })
+    navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Home })
+    // navigation.getParent()?.navigate(Stacks.CredentialStack, { screen: Screens.Credentials })
   }
 
   useEffect(() => {

@@ -24,17 +24,18 @@ import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import { BifoldError } from '../types/error'
-import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
+import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
+import CredentialStack from './CredentialStack'
 import DeliveryStack from './DeliveryStack'
+import HomeStack from './HomeStack'
 import NotificationStack from './NotificationStack'
 import ProofRequestStack from './ProofRequestStack'
 import SettingStack from './SettingStack'
-import TabStack from './TabStack'
 import { createDefaultStackOptions } from './defaultStackOptions'
 
 const RootStack: React.FC = () => {
@@ -243,7 +244,7 @@ const RootStack: React.FC = () => {
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
-        <Stack.Screen name={Stacks.TabStack} component={TabStack} />
+        {/* <Stack.Screen name={Stacks.TabStack} component={TabStack} /> */}
         <Stack.Screen
           name={Screens.Chat}
           component={Chat}
@@ -256,7 +257,7 @@ const RootStack: React.FC = () => {
                 accessibilityLabel={t('Global.Back')}
                 testID={testIdWithKey('BackButton')}
                 onPress={() => {
-                  navigation.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+                  navigation.navigate(Stacks.HomeStack, { screen: Screens.Notification })
                 }}
                 icon="arrow-left"
               />
@@ -264,6 +265,8 @@ const RootStack: React.FC = () => {
           })}
         />
         <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} />
+        <Stack.Screen name={Stacks.HomeStack} component={HomeStack} />
+        <Stack.Screen name={Stacks.CredentialStack} component={CredentialStack} />
         <Stack.Screen
           name={Stacks.SettingStack}
           component={SettingStack}

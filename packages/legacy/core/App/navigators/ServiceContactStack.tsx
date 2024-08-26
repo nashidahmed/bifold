@@ -22,7 +22,7 @@ import { ContactStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
-const ContactStack: React.FC = () => {
+const ServiceContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
@@ -34,12 +34,13 @@ const ContactStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Contacts}
         component={ListContacts}
+        initialParams={{ serviceName: 'Infrastructures' }}
         // options={{
-        //   title: 'infra',
+        //   title: ''Infrastructure',
         //   headerRight: () => <CredentialListHeaderRight />,
         //   // headerLeft: () => <SettingsMenu />,
         // }}
-        options={({ route }) => ({ title: route.params?.serviceName || 'Vehicles' })} // Set title dynamically based on route params
+        options={({ route }) => ({ title: route.params?.serviceName || 'Contacts' })}
       />
       <Stack.Screen
         name={Screens.ContactDetails}
@@ -94,4 +95,4 @@ const ContactStack: React.FC = () => {
   )
 }
 
-export default ContactStack
+export default ServiceContactStack

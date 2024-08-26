@@ -88,20 +88,18 @@ const RecordField: React.FC<RecordFieldProps> = ({
     link: {
       ...ListItems.recordLink,
       paddingVertical: 2,
+      // paddingRight: 30,
     },
     valueContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingTop: 5,
+      // paddingTop: 5,
     },
     valueText: {
       ...ListItems.recordAttributeText,
-      paddingVertical: 4,
+      paddingVertical: 2,
     },
   })
-
-  // // eslint-disable-next-line no-console
-  // console.log(field)
 
   return (
     <View style={styles.container}>

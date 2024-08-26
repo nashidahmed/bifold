@@ -91,7 +91,12 @@ const SettingStack: React.FC = () => {
         component={developer}
         options={{ title: t('Screens.Developer'), headerBackTestID: testIdWithKey('Back') }}
       />
-      <Stack.Screen name={Screens.Onboarding} options={{ title: t('Screens.Onboarding') }}>
+      <Stack.Screen
+        name={Screens.Onboarding}
+        options={({ route }) => ({
+          title: route.params?.pageName || t('Screens.Onboarding'),
+        })}
+      >
         {(props) => (
           <Onboarding
             {...props}

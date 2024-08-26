@@ -31,7 +31,7 @@ import { useBasicMessages, useCredentialByState, useProofByState, useAgent, useC
 
 // eslint-disable-next-line import/no-named-as-default
 import { ConfigurationContext } from '../../App/contexts/configuration'
-import Home from '../../App/screens/Home'
+import Home from '../../App/screens/Notification'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 

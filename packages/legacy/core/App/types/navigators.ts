@@ -9,7 +9,7 @@ export enum Screens {
   Preface = 'Preface',
   CreatePIN = 'Create a PIN',
   EnterPIN = 'Enter PIN',
-  Home = 'Home',
+  Notification = 'Notification',
   Scan = 'Scan',
   Credentials = 'Credentials',
   CredentialDetails = 'Credential Details',
@@ -42,6 +42,8 @@ export enum Screens {
   ScanHelp = 'Scan Help',
   QRCodeGen = 'Generate QR Code',
   ScanBLE = 'Bluetooth',
+  Home = 'Home',
+  ServiceContacts = 'Service Contacts',
 }
 
 export enum Stacks {
@@ -57,17 +59,21 @@ export enum Stacks {
 }
 
 export enum TabStacks {
-  HomeStack = 'Tab Home Stack',
+  HomeStack = 'Tab Notification Stack',
   ConnectStack = 'Tab Connect Stack',
   CredentialStack = 'Tab Credential Stack',
+  ContactStack = 'Tab Contact Stack',
+  ServiceContactStack = 'Tab Service Contact Stack',
 }
 
 export type RootStackParams = {
   [Screens.Splash]: undefined
   [Stacks.TabStack]: NavigatorScreenParams<TabStackParams>
-  [Screens.Chat]: { connectionId: string }
+  [Screens.Chat]: { connectionId: string; serviceName: string }
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
+  [Stacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
+  [Stacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
   [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
@@ -77,11 +83,13 @@ export type TabStackParams = {
   [TabStacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
   [TabStacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [TabStacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
+  [TabStacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
+  [TabStacks.ServiceContactStack]: NavigatorScreenParams<ServiceContactStackParams>
 }
 
 export type AuthenticateStackParams = {
   [Screens.Preface]: undefined
-  [Screens.Onboarding]: undefined
+  [Screens.Onboarding]: { pageName?: string }
   [Screens.Terms]: undefined
   [Screens.AttemptLockout]: undefined
   [Screens.CreatePIN]: { setAuthenticated: (status: boolean) => void } | undefined
@@ -91,15 +99,15 @@ export type AuthenticateStackParams = {
 }
 
 export type OnboardingStackParams = {
-  [Screens.Onboarding]: undefined
+  [Screens.Onboarding]: { pageName?: string }
   [Screens.Developer]: undefined
 }
 
 export type ContactStackParams = {
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
-  [Screens.Contacts]: undefined
-  [Screens.Chat]: { connectionId: string }
-  [Screens.ContactDetails]: { connectionId: string }
+  [Screens.Contacts]: { serviceName?: string }
+  [Screens.Chat]: { connectionId: string; serviceName: string }
+  [Screens.ContactDetails]: { connectionId: string; serviceName: string }
   [Screens.RenameContact]: { connectionId: string }
   [Screens.SelectProofRequest]: { connectionId: string }
   [Screens.SendProofRequest]: { connectionId: string }
@@ -111,6 +119,8 @@ export type ContactStackParams = {
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
   [Screens.ProofRequest]: { proofId: string }
 }
+
+export type ServiceContactStackParams = ContactStackParams
 
 export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: { connectionId?: string }
@@ -133,8 +143,12 @@ export type CredentialStackParams = {
 }
 
 export type HomeStackParams = {
-  [Screens.Home]: undefined
+  [Stacks.HomeStack]: NavigatorScreenParams<NotificationStackParams>
 }
+
+// export type ServiceContactStackParams = {
+//   [Screens.Contacts]: { serviceName?: boolean }
+// }
 
 export type ConnectStackParams = {
   [Screens.Scan]: undefined
@@ -151,11 +165,12 @@ export type SettingStackParams = {
   [Screens.UseBiometry]: undefined
   [Screens.CreatePIN]: undefined
   [Screens.Terms]: undefined
-  [Screens.Onboarding]: undefined
+  [Screens.Onboarding]: { pageName?: string }
   [Screens.Developer]: undefined
 }
 
 export type NotificationStackParams = {
+  [Screens.Notification]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
@@ -164,7 +179,7 @@ export type NotificationStackParams = {
 }
 
 export type DeliveryStackParams = {
-  [Screens.Connection]: { connectionId?: string; threadId?: string }
+  [Screens.Connection]: { connectionId?: string; threadId?: string; agentType?: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
   [Screens.OnTheWay]: { credentialId: string }

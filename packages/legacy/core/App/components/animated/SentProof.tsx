@@ -26,23 +26,24 @@ const SentProof: React.FC = () => {
       justifyContent: 'space-between',
       flexDirection: 'row',
       marginTop: 30, // Added marginTop for space
+      position: 'relative',
     },
     carContainer: {
       // Adjusted margin to create space between cars
-      marginHorizontal: 70,
+      marginHorizontal: 100,
       zIndex: 2,
     },
     sentContainer: {
       // Adjusted position to place the Sent SVG between cars
       backgroundColor: ColorPallet.brand.modalPrimaryBackground,
       position: 'absolute',
-      left: '61%', // Position the Sent SVG in the center horizontally
+      left: '23%', // Position the Sent SVG in the center horizontally
       zIndex: 2,
     },
     lineContainer: {
       position: 'absolute',
       top: '3%',
-      left: '40%',
+      left: '17.5%',
       zIndex: 1,
     },
   })

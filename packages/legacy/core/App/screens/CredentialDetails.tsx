@@ -38,7 +38,7 @@ type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.Cr
 
 const paddingHorizontal = 24
 const paddingVertical = 16
-const logoHeight = 80
+const logoHeight = 70
 
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
   if (!route?.params) {
@@ -70,12 +70,17 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#113B51', //hardcode overlay.brandingOverlay?.primaryBackgroundColor,
+      // backgroundColor: '#113B51', //hardcode overlay.brandingOverlay?.primaryBackgroundColor,
+      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       display: 'flex',
     },
     secondaryHeaderContainer: {
-      height: 1.5 * logoHeight,
-      backgroundColor: '#0D2D3E', //hardcode (overlay.brandingOverlay?.backgroundImage ? 'rgba(0, 0, 0, 0)' : overlay.brandingOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
+      height: 0.8 * logoHeight,
+      // backgroundColor: '#0D2D3E', //hardcode (overlay.brandingOverlay?.backgroundImage ? 'rgba(0, 0, 0, 0)' : overlay.brandingOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
+      backgroundColor:
+        (overlay.brandingOverlay?.backgroundImage
+          ? 'rgba(0, 0, 0, 0)'
+          : overlay.brandingOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
     },
     primaryHeaderContainer: {
       paddingHorizontal,
@@ -326,12 +331,12 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const footer = () => {
     return (
-      <View style={{ marginBottom: 50 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: 1170 }}>
         {credentialConnectionLabel ? (
           <View
             style={{
               backgroundColor: ColorPallet.brand.secondaryBackground,
-              marginTop: paddingVertical,
+              marginRight: paddingVertical * 3,
               paddingHorizontal,
               paddingVertical,
             }}
@@ -350,9 +355,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <View
             style={{
               backgroundColor: ColorPallet.notification.error,
-              marginTop: paddingVertical,
-              paddingHorizontal,
-              paddingVertical,
+              // marginTop: paddingVertical,
+              // paddingHorizontal,
+              // paddingVertical,
             }}
           >
             <Text testID={testIdWithKey('RevokedDate')}>

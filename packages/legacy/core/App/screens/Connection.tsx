@@ -1,5 +1,5 @@
 import { DidExchangeState } from '@aries-framework/core'
-import { useConnectionById } from '@aries-framework/react-hooks'
+import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
@@ -10,10 +10,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useNotifications } from '../hooks/notifications'
-import { Screens, TabStacks, DeliveryStackParams, Stacks } from '../types/navigators'
+import { Screens, DeliveryStackParams, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
@@ -34,7 +36,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   // delay message, the user should be redirected to the home screen.
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const { connectionId, threadId } = route.params
+  const { connectionId, threadId, agentType = '' } = route.params
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const connection = connectionId ? useConnectionById(connectionId) : undefined
   const { t } = useTranslation()
@@ -50,6 +52,15 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     shouldShowDelayMessage: false,
     connectionIsActive: false,
   })
+
+  const [, storeDispatch] = useStore()
+  const proofSentRef = useRef(false)
+  const { agent } = useAgent()
+
+  if (!agent) {
+    throw new Error('Unable to fetch agent from AFJ')
+  }
+
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -118,7 +129,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   const onDismissModalTouched = () => {
     dispatch({ shouldShowDelayMessage: false, isVisible: false })
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
   }
 
   useEffect(() => {
@@ -130,7 +141,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (state.shouldShowDelayMessage && !state.notificationRecord) {
       if (autoRedirectConnectionToHome) {
         dispatch({ shouldShowDelayMessage: false, isVisible: false })
-        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+        navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
       } else {
         AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
       }
@@ -166,9 +177,28 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId } }],
+          routes: [
+            { name: Stacks.HomeStack },
+            { name: Screens.Chat, params: { connectionId, serviceName: agentType } },
+          ],
         })
       )
+      if (!proofSentRef.current && agentType !== 'ca') {
+        storeDispatch({
+          type: DispatchAction.Send_ProofReq,
+          payload: [connectionId, agent],
+        })
+        proofSentRef.current = true
+      }
+
+      // sendProofRequest(
+      //   agent,
+      //   useProofRequestTemplates(false, ['vehicle_information', 'vehicle_owner', 'state_issued'])[1],
+      //   connectionId,
+      //   {}
+      // ).then((result) => {
+      //   if (result?.proofRecord) linkProofWithTemplate(agent, result.proofRecord, '2')
+      // })
 
       dispatch({ isVisible: false })
       return

@@ -53,6 +53,16 @@ export interface DeepLink {
   activeDeepLink?: string
 }
 
+export interface Agent {
+  infrastructure: string[]
+  ca: string[]
+}
+
+export interface ProofReq {
+  sent: string[]
+  received: string[]
+}
+
 export interface State {
   onboarding: Onboarding
   authentication: Authentication
@@ -63,4 +73,6 @@ export interface State {
   deepLink: DeepLink
   migration: Migration
   loading: boolean
+  agent: Agent
+  proofReq: ProofReq
 }

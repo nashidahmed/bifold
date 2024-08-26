@@ -1,4 +1,4 @@
 import { renderBubble } from './ChatBubble'
-import { renderSend, renderComposer, renderInputToolbar } from './MessageInput'
+import { renderSend, renderComposer, renderInputToolbar, renderNotVerified } from './MessageInput'
 
-export { renderBubble, renderSend, renderComposer, renderInputToolbar }
+export { renderBubble, renderSend, renderComposer, renderInputToolbar, renderNotVerified }

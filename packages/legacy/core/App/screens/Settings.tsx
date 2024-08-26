@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  useWindowDimensions,
   View,
 } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
@@ -32,6 +33,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store /*, dispatch*/] = useStore()
   // const developerOptionCount = useRef(0)
+  const { width } = useWindowDimensions()
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const { settings, enableTours } = useConfiguration()
   const defaultIconSize = 24
@@ -95,67 +97,85 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   // }
 
   const settingsSections: SettingSection[] = [
-    {
-      header: {
-        icon: { name: store.preferences.useConnectionInviterCapability ? 'person' : 'apartment', size: 30 },
-        title: store.preferences.useConnectionInviterCapability ? store.preferences.walletName : t('Screens.Contacts'),
-        iconRight: {
-          name: 'edit',
-          action: () => {
-            navigation.navigate(Screens.NameWallet)
-          },
-          accessibilityLabel: t('NameWallet.EditWalletName'),
-          testID: testIdWithKey('EditWalletName'),
-          style: { color: ColorPallet.brand.primary },
-        },
-        titleTestID: store.preferences.useConnectionInviterCapability ? testIdWithKey('WalletName') : undefined,
-      },
-      data: [
-        {
-          title: t('Screens.Contacts'),
-          accessibilityLabel: t('Screens.Contacts'),
-          testID: testIdWithKey('Contacts'),
-          onPress: () =>
-            navigation
-              .getParent()
-              ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } }),
-        },
-        // {
-        //   title: t('Settings.WhatAreContacts'),
-        //   accessibilityLabel: t('Settings.WhatAreContacts'),
-        //   testID: testIdWithKey('WhatAreContacts'),
-        //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.WhatAreContacts }),
-        //   value: undefined,
-        // },
-        {
-          title: t('Settings.QRCodeGen'),
-          accessibilityLabel: t('Settings.QRCodeGen'),
-          testID: testIdWithKey('QRCodeGen'),
-          onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen }),
-          value: undefined,
-        },
-        {
-          title: t('Settings.ScanBLE'),
-          accessibilityLabel: t('Settings.ScanBLE'),
-          testID: testIdWithKey('ScanBLE'),
-          onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ScanBLE }),
-          value: undefined,
-        },
-        // {
-        //   title: t('Screens.ProofRequestDetails'),
-        //   accessibilityLabel: t('Screens.ProofRequestDetails'),
-        //   testID: testIdWithKey('ProofRequestDetails'),
-        //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ProofRequestDetails }),
-        //   value: undefined,
-        // },
-      ],
-    },
+    // {
+    //   header: {
+    //     icon: { name: store.preferences.useConnectionInviterCapability ? 'person' : 'apartment', size: 30 },
+    //     title: store.preferences.useConnectionInviterCapability ? store.preferences.walletName : t('Screens.Contacts'),
+    //     iconRight: {
+    //       name: 'edit',
+    //       action: () => {
+    //         navigation.navigate(Screens.NameWallet)
+    //       },
+    //       accessibilityLabel: t('NameWallet.EditWalletName'),
+    //       testID: testIdWithKey('EditWalletName'),
+    //       style: { color: ColorPallet.brand.primary },
+    //     },
+    //     titleTestID: store.preferences.useConnectionInviterCapability ? testIdWithKey('WalletName') : undefined,
+    //   },
+    //   data: [
+    //     {
+    //       title: t('Screens.CA'),
+    //       accessibilityLabel: t('Screens.CA'),
+    //       testID: testIdWithKey('CA'),
+    //       onPress: () =>
+    //         navigation.getParent()?.navigate(Stacks.ContactStack, {
+    //           screen: Screens.Contacts,
+    //           params: { navigation: navigation, serviceName: 'CA' },
+    //         }),
+    //     },
+    //     {
+    //       title: t('Screens.Scan'),
+    //       accessibilityLabel: t('Screens.Scan'),
+    //       testID: testIdWithKey('Scan'),
+    //       onPress: () => navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan }),
+    //       value: undefined,
+    //     },
+    //     // {
+    //     //   title: t('Settings.QRCodeGen'),
+    //     //   accessibilityLabel: t('Settings.QRCodeGen'),
+    //     //   testID: testIdWithKey('QRCodeGen'),
+    //     //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.QRCodeGen }),
+    //     //   value: undefined,
+    //     // },
+    //     // {
+    //     //   title: t('Settings.ScanBLE'),
+    //     //   accessibilityLabel: t('Settings.ScanBLE'),
+    //     //   testID: testIdWithKey('ScanBLE'),
+    //     //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ScanBLE }),
+    //     //   value: undefined,
+    //     // },
+    //     // {
+    //     //   title: t('Screens.ProofRequestDetails'),
+    //     //   accessibilityLabel: t('Screens.ProofRequestDetails'),
+    //     //   testID: testIdWithKey('ProofRequestDetails'),
+    //     //   onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.ProofRequestDetails }),
+    //     //   value: undefined,
+    //     // },
+    //   ],
+    // },
     {
       header: {
         icon: { name: 'settings' },
         title: t('Settings.AppSettings'),
       },
       data: [
+        {
+          title: t('Screens.CA'),
+          accessibilityLabel: t('Screens.CA'),
+          testID: testIdWithKey('CA'),
+          onPress: () =>
+            navigation.getParent()?.navigate(Stacks.ContactStack, {
+              screen: Screens.Contacts,
+              params: { navigation: navigation, serviceName: 'CA' },
+            }),
+        },
+        {
+          title: t('Screens.Scan'),
+          accessibilityLabel: t('Screens.Scan'),
+          testID: testIdWithKey('Scan'),
+          onPress: () => navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan }),
+          value: undefined,
+        },
         {
           title: t('Global.Biometrics'),
           value: store.preferences.useBiometry ? t('Global.On') : t('Global.Off'),
@@ -359,8 +379,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           },
         }) => <SectionHeader icon={icon} iconRight={iconRight} title={title} titleTestID={titleTestID} />}
         ItemSeparatorComponent={() => (
-          <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
-            <View style={[styles.itemSeparator]}></View>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View
+              style={{
+                width: width - 50,
+                borderWidth: 1,
+                borderColor: ColorPallet.grayscale.lightGrey,
+              }}
+            />
           </View>
         )}
         SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}

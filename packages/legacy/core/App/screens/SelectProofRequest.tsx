@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useAgent } from '@aries-framework/react-hooks'
 import { linkProofWithTemplate, sendProofRequest, useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 // import { useNavigation } from '@react-navigation/core'
@@ -32,8 +31,6 @@ const SelectProofRequest = ({ navigation, route }: { navigation: any; route: any
   const [expiryDate, setexpiryDate] = useState(initialState)
   const [stateIssued, setstateIssued] = useState(initialState)
 
-  console.log(connectionId)
-  console.log(vehicleName)
   const { t } = useTranslation()
 
   const style = StyleSheet.create({

@@ -15,7 +15,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 // import { useConnectionByOutOfBandId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
-import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
+import { ContactStackParams, Screens, Stacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { formatTime, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
@@ -24,7 +24,7 @@ type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactD
 
 const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   // eslint-disable-next-line no-unsafe-optional-chaining
-  const { connectionId } = route?.params
+  const { connectionId, serviceName } = route?.params
   const { agent } = useAgent()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<ContactStackParams>>()
@@ -62,7 +62,10 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
 
       await agent.connections.deleteById(connection.id)
 
-      navigation.navigate(Screens.Contacts)
+      navigation.getParent()?.navigate(Stacks.ContactStack, {
+        screen: Screens.Contacts,
+        params: { navigation: navigation, serviceName: serviceName },
+      })
 
       // FIXME: This delay is a hack so that the toast doesn't appear until the modal is dismissed
       await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -82,7 +85,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   }
 
   const handleGoToCredentials = () => {
-    navigation.getParent()?.navigate(TabStacks.CredentialStack, { screen: Screens.Credentials })
+    navigation.getParent()?.navigate(Stacks.CredentialStack, { screen: Screens.Credentials })
   }
 
   const handleCancelUnableRemove = () => {

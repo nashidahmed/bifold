@@ -18,6 +18,8 @@ export enum LocalStorageKeys {
   RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
   Preferences = 'PreferencesState',
   Migration = 'MigrationState',
+  Agent = 'AgentState',
+  ProofReq = 'ProofReqState',
   Tours = 'ToursState',
 }
 

@@ -7,8 +7,8 @@ export const useProofRequestTemplates = (useDevRestrictions: boolean, attributes
       (currentDate[0].length === 1 ? '0' + currentDate[0] : currentDate[0]) +
       (currentDate[1].length === 1 ? '0' + currentDate[1] : currentDate[1])
   )
-  const studentRestrictions = [{ cred_def_id: '77LPnWghCSDrT4nuxGSFEj:3:CL:32:fhwa-vdkms-ca' }]
-  const schema_id = '77LPnWghCSDrT4nuxGSFEj:2:vehicle_credential:0.1.0'
+  const studentRestrictions = [{ cred_def_id: 'F96pyrzT3CYVVEXQLvW32M:3:CL:158:fhwa-vdkms-ca' }]
+  const schema_id = 'F96pyrzT3CYVVEXQLvW32M:2:vehicle_credential:0.1.0'
   const studentDevRestrictions = [{ schema_name: 'vehicle_credential' }]
   const restrictions = useDevRestrictions ? studentDevRestrictions : studentRestrictions
   const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [

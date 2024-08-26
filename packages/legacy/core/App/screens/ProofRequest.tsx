@@ -34,7 +34,7 @@ import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useAllCredentialsForProof } from '../hooks/proofs'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
+import { NotificationStackParams, Screens, Stacks } from '../types/navigators'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
@@ -389,7 +389,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
     toggleDeclineModalVisible()
 
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
   }
 
   const proofPageHeader = () => {
@@ -561,7 +561,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                         : undefined
                     }
                     proof={true}
-                  ></CredentialCard>
+                  />
                 </View>
               )}
             </View>

@@ -550,6 +550,9 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AriesBifold/Info.plist;
+				"INFOPLIST_KEY_UISupportedInterfaceOrientations[sdk=*]" = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationLandscapeLeft";
+				"INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad[sdk=*]" = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				"INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone[sdk=*]" = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationLandscapeLeft";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -587,6 +590,10 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AriesBifold/Info.plist;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
+				"INFOPLIST_KEY_UISupportedInterfaceOrientations[sdk=*]" = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationLandscapeLeft";
+				"INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad[sdk=*]" = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				"INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone[sdk=*]" = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationLandscapeLeft";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -684,7 +691,8 @@
 					"-ld_classic",
 					"-Wl",
 					"-ld_classic",
-					"-Wl -ld_classic ",
+					"-Wl",
+					"-ld_classic",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
@@ -758,7 +766,8 @@
 					"-ld_classic",
 					"-Wl",
 					"-ld_classic",
-					"-Wl -ld_classic ",
+					"-Wl",
+					"-ld_classic",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;

@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useTheme } from '../contexts/theme'
-import { Screens, TabStacks } from '../types/navigators'
+import { Screens, Stacks } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
@@ -58,7 +58,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   }
 
   const onBackToHomeTouched = () => {
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Notification })
   }
 
   useEffect(() => {

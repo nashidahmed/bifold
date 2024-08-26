@@ -34,9 +34,10 @@ interface CondensedMessage {
 interface Props {
   contact: ConnectionRecord
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
+  serviceName: string
 }
 
-const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
+const ContactListItem: React.FC<Props> = ({ contact, navigation, serviceName }) => {
   const { t } = useTranslation()
   const { TextTheme, ColorPallet, ListItems } = useTheme()
   const basicMessages = useBasicMessagesByConnectionId(contact.id)
@@ -133,9 +134,10 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   }, [basicMessages, credentials, proofs])
 
   const navigateToContact = useCallback(() => {
-    navigation
-      .getParent()
-      ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
+    navigation.getParent()?.navigate(Stacks.ContactStack, {
+      screen: Screens.Chat,
+      params: { connectionId: contact.id, serviceName: serviceName },
+    })
   }, [contact])
 
   const contactLabel = useMemo(

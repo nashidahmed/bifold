@@ -23,7 +23,7 @@ const translation = {
     "Done": "Done",
     "Skip": "Skip",
     "View": "View",
-    "Home": "Home",
+    "Notification": "Notification",
     "ErrorCode": "Error Code",
     "Okay": "Okay",
     "GoBack": "Go Back",
@@ -36,6 +36,7 @@ const translation = {
     "Off": "Off",
     "Close": "Close",
     "Remove": "Remove",
+    "Home": "Home",
   },
   "Date": {
     "ShortFormat": "MMM D",
@@ -239,7 +240,7 @@ const translation = {
   "ScanBLE": {
     "Connect": "Connect",
     "BluetoothText": "Please turn on Bluetooth to continue.",
-    "Text1": "Ensure Bluetooth is enabled on both devices. Use the button below to scan for available devices and send and invitation to connect.",
+    "Text1": "Ensure Bluetooth is enabled on both devices. Use the button below to scan for available devices and send an invitation to connect.",
     "Text2": "Available Devices",
     "Text3": "No devices found",
     "Toggle": "Toggle Bluetooth discovery",
@@ -288,6 +289,9 @@ const translation = {
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here.",
     "WhatAreContacts": "What are Contacts?",
     "AddContact": "Add Contact",
+    "Infrastructure": "Infrastructure",
+    "CA": "Certificate Authority (CA)",
+    "NoContacts": "No contacts to show",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -349,7 +353,7 @@ const translation = {
     "IssuedBy": "Issued by:",
     "RemoveCredential": "Remove Credential",
   },
-  "Home": {
+  "Notification": {
     "Welcome": "Welcome",
     "Notification": "Notification",
     "Notifications": "Notifications",
@@ -394,7 +398,7 @@ const translation = {
     "ConnectionInvitation": "Connection Invitation",
     "ScanQR": "Show this QR code to the other person",
     "ScanQRComment": "After the QR code is scanned, a connection will be created.",
-    "ShareQR": "Sharing this QR code with someone will add them as a Contact.",
+    "ShareQR": "Share this QR code with someone to be connected with.",
     "MakingConnection": "Making connection...",
     "ConnectionCompleted": "Connection completed!",
     "Toggle": "Toggle Connection Inviter Capability",
@@ -523,9 +527,11 @@ const translation = {
     "Developer": "Developer options"
   },
   "TabStack": {
-    "Home": "Notifications",
+    "Notification": "Notifications",
     "Scan": "Scan",
     "Credentials": "Credentials",
+    "Contacts": "Contacts",
+    "ServiceContacts": "Service Contacts",
   },
   "RootStack": {
     "Contacts": "Contacts",
@@ -555,7 +561,7 @@ const translation = {
     "Terms": "Terms & Conditions",
     "CreatePIN": "Create a PIN",
     "EnterPIN": "Enter PIN",
-    "Home": "Notifications",
+    "Notification": "Notifications",
     "Scan": "Scan",
     "Credentials": "Credentials",
     "CredentialDetails": "Credential Details",
@@ -591,6 +597,8 @@ const translation = {
     "ProofRequesting": 'Proof Requesting',
     "NameWallet": "Name your wallet",
     "RenameContact": "Edit Contact Name",
+    "Home": "Home",
+    "CA": "CA"
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

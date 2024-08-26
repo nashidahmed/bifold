@@ -15,8 +15,10 @@ import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
 import { TourID } from '../types/tour'
 import { testIdWithKey } from '../utils/testable'
 
+import ContactStack from './ContactStack'
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
+import ServiceContactStack from './ServiceContactStack'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
@@ -77,20 +79,48 @@ const TabStack: React.FC = () => {
                         fontWeight: focused ? TextTheme.bold.fontWeight : TextTheme.normal.fontWeight,
                       }}
                     >
-                      {t('TabStack.Home')}
+                      {t('TabStack.Notification')}
                     </Text>
                   )}
                 </View>
               </AttachTourStep>
             ),
             tabBarShowLabel: false,
-            tabBarAccessibilityLabel: `${t('TabStack.Home')} (${total ?? 0})`,
-            tabBarTestID: testIdWithKey(t('TabStack.Home')),
+            tabBarAccessibilityLabel: `${t('TabStack.Notification')} (${total ?? 0})`,
+            tabBarTestID: testIdWithKey(t('TabStack.Notification')),
             tabBarBadge: total || undefined,
             tabBarBadgeStyle: {
               marginLeft: leftMarginForDevice(),
               backgroundColor: ColorPallet.semantic.error,
             },
+          }}
+        />
+        <Tab.Screen
+          name={TabStacks.CredentialStack}
+          component={CredentialStack}
+          options={{
+            tabBarIconStyle: styles.tabBarIcon,
+            tabBarIcon: ({ color, focused }) => (
+              <AttachTourStep tourID={TourID.HomeTour} index={2}>
+                <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
+                  <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
+                  {showLabels && (
+                    <Text
+                      style={{
+                        ...TabTheme.tabBarTextStyle,
+                        color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                        fontWeight: focused ? TextTheme.bold.fontWeight : TextTheme.normal.fontWeight,
+                      }}
+                    >
+                      {t('TabStack.Credentials')}
+                    </Text>
+                  )}
+                </View>
+              </AttachTourStep>
+            ),
+            tabBarShowLabel: false,
+            tabBarAccessibilityLabel: t('TabStack.Credentials'),
+            tabBarTestID: testIdWithKey(t('TabStack.Credentials')),
           }}
         />
         <Tab.Screen
@@ -176,14 +206,14 @@ const TabStack: React.FC = () => {
           {() => <View />}
         </Tab.Screen>
         <Tab.Screen
-          name={TabStacks.CredentialStack}
-          component={CredentialStack}
+          name={TabStacks.ContactStack}
+          component={ContactStack}
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
               <AttachTourStep tourID={TourID.HomeTour} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
-                  <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
+                  <Icon name={focused ? 'contacts' : 'contacts-outline'} color={color} size={30} />
                   {showLabels && (
                     <Text
                       style={{
@@ -192,15 +222,43 @@ const TabStack: React.FC = () => {
                         fontWeight: focused ? TextTheme.bold.fontWeight : TextTheme.normal.fontWeight,
                       }}
                     >
-                      {t('TabStack.Credentials')}
+                      {t('TabStack.Contacts')}
                     </Text>
                   )}
                 </View>
               </AttachTourStep>
             ),
             tabBarShowLabel: false,
-            tabBarAccessibilityLabel: t('TabStack.Credentials'),
-            tabBarTestID: testIdWithKey(t('TabStack.Credentials')),
+            tabBarAccessibilityLabel: t('TabStack.Contacts'),
+            tabBarTestID: testIdWithKey(t('TabStack.Contacts')),
+          }}
+        />
+        <Tab.Screen
+          name={TabStacks.ServiceContactStack}
+          component={ServiceContactStack}
+          options={{
+            tabBarIconStyle: styles.tabBarIcon,
+            tabBarIcon: ({ color, focused }) => (
+              <AttachTourStep tourID={TourID.HomeTour} index={2}>
+                <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
+                  <Icon name={'domain'} color={color} size={30} />
+                  {showLabels && (
+                    <Text
+                      style={{
+                        ...TabTheme.tabBarTextStyle,
+                        color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                        fontWeight: focused ? TextTheme.bold.fontWeight : TextTheme.normal.fontWeight,
+                      }}
+                    >
+                      {t('TabStack.ServiceContacts')}
+                    </Text>
+                  )}
+                </View>
+              </AttachTourStep>
+            ),
+            tabBarShowLabel: false,
+            tabBarAccessibilityLabel: t('TabStack.ServiceContacts'),
+            tabBarTestID: testIdWithKey(t('TabStack.ServiceContacts')),
           }}
         />
       </Tab.Navigator>

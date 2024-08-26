@@ -51,7 +51,9 @@ const Terms: React.FC = () => {
     //   nav.goBack()
     // }
 
-    navigation.navigate(Screens.Onboarding)
+    navigation.navigate(Screens.Onboarding, {
+      pageName: undefined,
+    })
   }
 
   return (

@@ -123,8 +123,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     bodyText: {
       ...TextTheme.normal,
       flexShrink: 1,
-      marginVertical: 15,
-      paddingBottom: 10,
     },
     icon: {
       marginRight: 10,
@@ -229,9 +227,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         case NotificationType.BasicMessage:
           resolve({
             type: InfoBoxType.Info,
-            title: t('Home.NewMessage'),
-            body: theirLabel ? `${theirLabel} ${t('Home.SentMessage')}` : t('Home.ReceivedMessage'),
-            buttonTitle: t('Home.ViewMessage'),
+            title: t('Notification.NewMessage'),
+            body: theirLabel ? `${theirLabel} ${t('Notification.SentMessage')}` : t('Notification.ReceivedMessage'),
+            buttonTitle: t('Notification.ViewMessage'),
           })
           break
         case NotificationType.CredentialOffer:
@@ -446,7 +444,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         )}
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={[styles.bodyText, styleConfig.textStyle]} testID={testIdWithKey('BodyText')}>
+        <Text
+          style={[
+            styles.bodyText,
+            styleConfig.textStyle,
+            { marginVertical: details.body ? 15 : 0, paddingBottom: details.body ? 10 : 0 },
+          ]}
+          testID={testIdWithKey('BodyText')}
+        >
           {details.body}
         </Text>
         <Button

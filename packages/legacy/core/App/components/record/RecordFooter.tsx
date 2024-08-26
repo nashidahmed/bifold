@@ -8,7 +8,7 @@ const RecordFooter: React.FC<React.PropsWithChildren> = ({ children }) => {
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
-      height: '100%',
+      height: 'auto',
     },
   })
   return <View style={styles.container}>{children}</View>

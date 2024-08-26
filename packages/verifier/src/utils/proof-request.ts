@@ -135,6 +135,7 @@ export const sendProofRequest = async (
   template: ProofRequestTemplate,
   connectionId: string,
   customPredicateValues?: Record<string, Record<string, number>>
+  // autoAccept?: AutoAcceptProof | undefined
 ): Promise<SendProofRequestResult | undefined> => {
   const proofFormats = buildProofRequestDataForTemplate(template, customPredicateValues)
   if (!proofFormats) {
@@ -142,6 +143,7 @@ export const sendProofRequest = async (
   }
   const proofRecord = await agent.proofs.requestProof({
     protocolVersion,
+    // autoAcceptProof: AutoAcceptProof.Always,
     connectionId,
     proofFormats,
   })

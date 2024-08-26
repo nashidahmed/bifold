@@ -23,7 +23,7 @@ const translation = {
     "Done": "Feito",
     "Skip": "Pular",
     "View": "Visualizar",
-    "Home": "Home",
+    "Notification": "Notification",
     "ErrorCode": "Código de Erro",
     "Okay": "OK",
     "GoBack": "Voltar",
@@ -269,6 +269,9 @@ const translation = {
     "PeopleAndOrganizations": "Pessoas e organizações com as quais você interagiu estão listadas aqui.",
     "WhatAreContacts": "O que são Contatos?",
     "AddContact": "Adicionar um Contato",
+    "Infrastructure": "Infraestrutura",
+    "CA": "Autoridade Certificadora (CA)",
+    "NoContacts": "Nenhum contato para mostrar",
   },
   "ContactDetails": {
     "Created": "Criado",
@@ -330,7 +333,7 @@ const translation = {
     "IssuedBy": "Emitida por:",
     "RemoveCredential": "Remover Credencial",
   },
-  "Home": {
+  "Notification": {
     "Welcome": "Bem Vindo",
     "Notifications": "Notificações",
     "NoNewUpdates": "Você não tem novas notificações.",
@@ -491,9 +494,11 @@ const translation = {
     "Developer": "Opções de Desenvolvedor"
   },
   "TabStack": {
-    "Home": "Notificações",
+    "Notification": "Notificações",
     "Scan": "Scanear",
     "Credentials": "Credenciais",
+    "Contacts": "Contatos",
+    "ServiceContacts": "Contatos de Serviço",
   },
   "RootStack": {
     "Contacts": "Contatos",
@@ -522,7 +527,7 @@ const translation = {
     "Terms": "Termos & Condições",
     "CreatePIN": "Criar um PIN",
     "EnterPIN": "Digitar o PIN",
-    "Home": "Notificações",
+    "Notification": "Notificações",
     "Scan": "Scanear",
     "Credentials": "Credenciais",
     "CredentialDetails": "Detalhes de Credencial",

@@ -13,7 +13,7 @@ const NoNewUpdates: React.FC = () => {
   return (
     <InfoTextBox>
       <Text style={[HomeTheme.noNewUpdatesText, { flexShrink: 1 }]} testID={testIdWithKey('NoNewUpdates')}>
-        {t('Home.NoNewUpdates')}
+        {t('Notification.NoNewUpdates')}
       </Text>
     </InfoTextBox>
   )

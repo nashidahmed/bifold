@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -8,11 +8,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-import { HomeStackParams, Screens } from '../../types/navigators'
+import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
-interface NotificationModalProps extends React.PropsWithChildren {
+interface NotificationModalProps extends PropsWithChildren {
   title: string
   doneTitle?: string
   doneType?: ButtonType
@@ -79,7 +79,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 
   const closeHome = () => {
     close()
-    navigation.navigate(Screens.Home)
+    navigation.getParent()?.navigate(Stacks.NotificationStack, { screen: Screens.Notification })
   }
 
   return (
@@ -89,9 +89,9 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           <View style={styles.iconContainer}>
             <TouchableOpacity
               accessible={true}
-              accessibilityLabel={t('Global.Home')}
+              accessibilityLabel={t('Global.Notification')}
               accessibilityRole={'button'}
-              testID={testIdWithKey('Home')}
+              testID={testIdWithKey('Notification')}
               style={styles.iconButton}
               onPress={onHome || closeHome}
               hitSlop={hitSlop}

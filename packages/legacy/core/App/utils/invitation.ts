@@ -1,18 +1,21 @@
 import { Agent } from '@aries-framework/core'
 import { RouteProp } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { t } from 'i18next'
 
+import { DispatchAction, ReducerAction } from '../contexts/reducers/store'
 import { BifoldError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
 
 import { connectFromInvitation, getJson, getUrl, receiveMessageFromUrlRedirect } from './helpers'
-import { t } from 'i18next'
 
 export const handleInvitation = async (
   navigation: StackNavigationProp<ConnectStackParams, keyof ConnectStackParams>,
   route: RouteProp<ConnectStackParams, keyof ConnectStackParams>,
   agent: Agent<any> | undefined,
-  value: string
+  value: string,
+  agentType: string = '',
+  dispatch?: React.Dispatch<ReducerAction<DispatchAction>>
 ): Promise<void> => {
   let implicitInvitations = false
   if (route?.params && route.params['implicitInvitations']) {
@@ -25,11 +28,24 @@ export const handleInvitation = async (
 
   try {
     const receivedInvitation = await connectFromInvitation(value, agent, implicitInvitations, reuseConnections)
+    if (dispatch) {
+      if (agentType === 'infrastructure') {
+        dispatch({
+          type: DispatchAction.ADD_TO_INFRASTRUCTURE,
+          payload: [receivedInvitation?.connectionRecord?.id],
+        })
+      } else if (agentType === 'ca') {
+        dispatch({
+          type: DispatchAction.ADD_TO_CA,
+          payload: [receivedInvitation?.connectionRecord?.id],
+        })
+      }
+    }
     if (receivedInvitation?.connectionRecord?.id) {
       // not connectionless
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
-        params: { connectionId: receivedInvitation.connectionRecord.id },
+        params: { connectionId: receivedInvitation.connectionRecord.id, agentType },
       })
     } else {
       //connectionless

@@ -10,9 +10,10 @@ import HeaderButton, { ButtonLocation } from './HeaderButton'
 
 interface InfoIconProps {
   connectionId: string
+  serviceName: string
 }
 
-const InfoIcon: React.FC<InfoIconProps> = ({ connectionId }) => {
+const InfoIcon: React.FC<InfoIconProps> = ({ connectionId, serviceName }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const { t } = useTranslation()
 
@@ -24,7 +25,7 @@ const InfoIcon: React.FC<InfoIconProps> = ({ connectionId }) => {
       onPress={() =>
         navigation.navigate(Stacks.ContactStack, {
           screen: Screens.ContactDetails,
-          params: { connectionId: connectionId },
+          params: { connectionId: connectionId, serviceName: serviceName },
         })
       }
       icon="dots-vertical"

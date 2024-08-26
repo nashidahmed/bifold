@@ -10,8 +10,8 @@ export const AppCommons = createContext<AppCommonsContext>(null as unknown as Ap
 
 export const CommonUtilProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const logger = new AppConsoleLogger(LogLevel.test)
-  const log = async (messaage: string, logLevel: Exclude<LogLevel, LogLevel.off>) => {
-    logger.log(logLevel, messaage)
+  const log = async (message: string, logLevel: Exclude<LogLevel, LogLevel.off>) => {
+    logger.log(logLevel, message)
     //TODO: do some more logic like collecting errors for later logging and investigation
   }
 

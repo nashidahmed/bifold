@@ -32,6 +32,7 @@ interface CredentialCard11Props {
   proof?: boolean
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
+  fixedHeight?: boolean
 }
 
 /*
@@ -77,11 +78,14 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   proof,
   hasAltCredentials,
   handleAltCredChange,
+  // fixedHeight,
 }) => {
-  const { width } = useWindowDimensions()
+  const { width, height } = useWindowDimensions()
+  const cardWidth = 0.475 * width
+  const cardHeight = 0.25 * height
   const borderRadius = 10
   const padding = width * 0.05
-  const logoHeight = width * 0.12
+  const logoHeight = cardHeight * 0.6
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
   const { OCABundleResolver } = useConfiguration()
@@ -126,24 +130,33 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#113B51', //hardcode overlay.brandingOverlay?.primaryBackgroundColor,
-
+      // backgroundColor: '#113B51', //hardcode overlay.brandingOverlay?.primaryBackgroundColor,
+      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
+      minHeight: cardHeight,
+      // minHeight: fixedHeight ? cardHeight * 2.05 : cardHeight,
+      width: cardWidth,
     },
     cardContainer: {
       flexDirection: 'row',
-      minHeight: 0.33 * width,
+      // minHeight: 0.33 * width,
+      // height: '100%',
     },
     secondaryBodyContainer: {
-      width: logoHeight,
+      width: '15%',
+      minHeight: cardHeight,
+      // minHeight: fixedHeight ? cardHeight * 2.05 : cardHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      backgroundColor: '#0D2D3E', //hardcode getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor
+      backgroundColor: getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor,
+      // backgroundColor: '#0D2D3E', //hardcode getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor
     },
     primaryBodyContainer: {
       flex: 1,
       padding,
-      marginLeft: -1 * logoHeight + padding,
+      paddingBottom: proof ? padding / 2 : padding,
+      paddingTop: proof ? padding / 2 : padding,
+      marginLeft: -1.25 * logoHeight + padding,
     },
     imageAttr: {
       height: 150,
@@ -161,8 +174,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       alignItems: 'center',
     },
     logoContainer: {
-      top: padding,
-      left: -1 * logoHeight + padding,
+      top: cardHeight * 0.2,
+      left: -1.1 * logoHeight + padding,
       width: logoHeight,
       height: logoHeight,
       backgroundColor: '#ffffff',
@@ -193,8 +206,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
       flexShrink: 1,
     },
+    colonText: {
+      ...TextTheme.normal,
+      fontSize: 14,
+      // color: ListItems.proofError.color,
+    },
     errorText: {
       ...TextTheme.normal,
+      fontSize: 14,
+      marginLeft: 5,
       color: ListItems.proofError.color,
     },
     errorIcon: {
@@ -376,6 +396,14 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 size={ListItems.recordAttributeText.fontSize}
               />
               <AttributeLabel label={label} />
+              {item?.satisfied != undefined && item?.satisfied === false ? (
+                <>
+                  <Text style={[styles.colonText]}>:</Text>
+                  <Text style={[styles.errorText]} numberOfLines={1}>
+                    {t('ProofRequest.PredicateNotSatisfied')}
+                  </Text>
+                </>
+              ) : null}
             </View>
           ) : (
             <AttributeLabel label={label} />
@@ -393,11 +421,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
             </View>
           )}
-          {item?.satisfied != undefined && item?.satisfied === false ? (
+          {/* {item?.satisfied != undefined && item?.satisfied === false ? (
             <Text style={[styles.errorText]} numberOfLines={1}>
               {t('ProofRequest.PredicateNotSatisfied')}
             </Text>
-          ) : null}
+          ) : null} */}
         </View>
       )
     )
@@ -516,7 +544,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               style={[
                 {
                   position: 'absolute',
-                  width: logoHeight,
+                  width: '100%',
                   height: '100%',
                   borderTopLeftRadius: borderRadius,
                   borderBottomLeftRadius: borderRadius,

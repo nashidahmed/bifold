@@ -37,7 +37,7 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
     <View
       style={{
         backgroundColor: ColorPallet.brand.secondaryBackground,
-        marginTop: 16,
+        // marginTop: 16,
         paddingHorizontal: 25,
         paddingVertical: 16,
       }}
@@ -54,7 +54,7 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
           style={[
             styles.footerText,
             styles.link,
-            { color: ColorPallet.semantic.error, textDecorationLine: 'underline' },
+            { color: ColorPallet.semantic.error, textDecorationLine: 'underline', fontSize: 14 },
           ]}
         >
           {t('CredentialDetails.RemoveFromWallet')}

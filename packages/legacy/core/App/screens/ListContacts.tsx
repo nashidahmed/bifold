@@ -1,5 +1,6 @@
 import { ConnectionRecord, ConnectionType } from '@aries-framework/core'
 import { useConnections } from '@aries-framework/react-hooks'
+import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,9 +16,14 @@ import { testIdWithKey } from '../utils/testable'
 
 interface ListContactsProps {
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
+  route: RouteProp<ContactStackParams, Screens.Contacts>
 }
 
-const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
+const ListContacts: React.FC<ListContactsProps> = ({ navigation, route }) => {
+  let serviceName = ''
+  if (route && route.params && route.params.serviceName) {
+    serviceName = route.params.serviceName
+  }
   const { ColorPallet } = useTheme()
   const { t } = useTranslation()
   const style = StyleSheet.create({
@@ -35,7 +41,17 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   // Filter out mediator agents
   let connections: ConnectionRecord[] = records
   if (!store.preferences.developerModeEnabled) {
-    connections = records.filter((r) => !r.connectionTypes.includes(ConnectionType.Mediator))
+    if (serviceName == 'Infrastructures') {
+      connections = records.filter((r) => [...store.agent.infrastructure].includes(r.id))
+    } else if (serviceName == 'CA') {
+      connections = records.filter((r) => [...store.agent.ca].includes(r.id))
+    } else {
+      connections = records.filter(
+        (r) =>
+          !r.connectionTypes.includes(ConnectionType.Mediator) &&
+          ![...store.agent.infrastructure, ...store.agent.ca].includes(r.id)
+      )
+    }
   }
 
   // Sort connections by updatedAt
@@ -72,15 +88,49 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
     }
   }, [store.preferences.useConnectionInviterCapability])
 
-  return (
+  return serviceName == 'Infrastructures' ? (
+    <View>
+      {/* <View style={{ padding: 20 }}>
+        <Text style={[TextTheme.label]}>{t('Contacts.'Infrastructure')}</Text>
+      </View> */}
+      <FlatList
+        style={style.list}
+        data={connections.filter((r) => store.agent.infrastructure.includes(r.id))}
+        ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
+        keyExtractor={(connection) => connection.id}
+        renderItem={({ item: connection }) => (
+          <ContactListItem contact={connection} navigation={navigation} serviceName="Infrastructures" />
+        )}
+        ListEmptyComponent={() => <EmptyListContacts serviceName="infrastructure" />}
+      />
+    </View>
+  ) : serviceName == 'CA' ? (
+    <View>
+      {/* <View style={{ padding: 20 }}>
+        <Text style={[TextTheme.label]}>{t('Contacts.CA')}</Text>
+      </View> */}
+      <FlatList
+        style={style.list}
+        data={connections.filter((r) => store.agent.ca.includes(r.id))}
+        ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
+        keyExtractor={(connection) => connection.id}
+        renderItem={({ item: connection }) => (
+          <ContactListItem contact={connection} navigation={navigation} serviceName="CA" />
+        )}
+        ListEmptyComponent={() => <EmptyListContacts serviceName="CA" />}
+      />
+    </View>
+  ) : (
     <View>
       <FlatList
         style={style.list}
         data={connections}
         ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
         keyExtractor={(connection) => connection.id}
-        renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
-        ListEmptyComponent={() => <EmptyListContacts navigation={navigation} />}
+        renderItem={({ item: connection }) => (
+          <ContactListItem contact={connection} navigation={navigation} serviceName="" />
+        )}
+        ListEmptyComponent={() => <EmptyListContacts serviceName="vehicle" />}
       />
     </View>
   )

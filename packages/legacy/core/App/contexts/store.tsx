@@ -7,6 +7,7 @@ import _defaultReducer, { ReducerAction } from './reducers/store'
 
 type Reducer = <S extends State>(state: S, action: ReducerAction<any>) => S
 
+// eslint-disable-next-line import/no-named-as-default-member
 interface StoreProviderProps extends React.PropsWithChildren {
   initialState?: State
   reducer?: Reducer
@@ -62,6 +63,14 @@ export const defaultState: State = {
     activeDeepLink: '',
   },
   loading: false,
+  agent: {
+    infrastructure: [],
+    ca: [],
+  },
+  proofReq: {
+    sent: [],
+    received: [],
+  },
 }
 
 export const StoreContext = createContext<[State, Dispatch<ReducerAction<any>>]>([

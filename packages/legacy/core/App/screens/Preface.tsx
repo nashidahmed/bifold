@@ -23,7 +23,9 @@ const Preface: React.FC = () => {
     dispatch({
       type: DispatchAction.DID_SEE_PREFACE,
     })
-    navigation.navigate(Screens.Onboarding)
+    navigation.navigate(Screens.Onboarding, {
+      pageName: undefined,
+    })
   }
   const style = StyleSheet.create({
     screenContainer: {

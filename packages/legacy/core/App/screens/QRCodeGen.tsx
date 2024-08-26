@@ -106,7 +106,7 @@ const QRCodeGen: React.FC<Props> = ({ navigation }) => {
   }, [])
 
   const handleEdit = () => {
-    navigation.navigate(Screens.NameWallet)
+    navigation.getParent()?.navigate(Stacks.SettingStack, { screen: Screens.NameWallet })
   }
 
   useEffect(() => {
@@ -123,14 +123,27 @@ const QRCodeGen: React.FC<Props> = ({ navigation }) => {
       })
     }
   }, [record])
+  const LoaderSize = (qrSize ?? width - 80) > 500 ? 500 : qrSize ?? width - 80
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <ScrollView>
         <View style={{ alignItems: 'center' }}>
           <View style={styles.qrContainer}>
-            {!invitation && <LoadingIndicator />}
-            {invitation && <QRRenderer value={invitation} size={qrSize} />}
+            {!invitation ? (
+              <View
+                style={{
+                  height: LoaderSize,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <LoadingIndicator />
+              </View>
+            ) : (
+              <QRRenderer value={invitation} size={qrSize} />
+            )}
           </View>
           <View style={{ paddingHorizontal: 20, flex: 1 }}>
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
