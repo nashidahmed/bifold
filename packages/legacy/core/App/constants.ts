@@ -1,3 +1,5 @@
+import { Config } from 'react-native-config'
+
 import { PINValidationRules } from './types/security'
 
 const lengthOfHiddenAttributes = 10
@@ -76,7 +78,7 @@ export const PINRules: PINValidationRules = {
   no_cross_pattern: false,
 }
 
-export const domain = 'didcomm://invite'
+export const domain = Config.DOMAIN
 
 export const tourMargin = 25
 
