@@ -66,7 +66,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
       ],
     }),
     proofs: new ProofsModule({
-      autoAcceptProofs: AutoAcceptProof.Always, //Automatically send info
+      autoAcceptProofs: AutoAcceptProof.ContentApproved, //Automatically send info
       proofProtocols: [
         new V1ProofProtocol({ indyProofFormat }),
         new V2ProofProtocol({
