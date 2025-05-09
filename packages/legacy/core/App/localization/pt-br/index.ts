@@ -175,6 +175,12 @@ const translation = {
     "ToContinueUsing": "Para continuar usando a funcionalidade de scan da FHWA, favor permitir o uso da câmera.",
     "OpenSettings": "Abrir as configurações",
   },
+  "BluetoothDisclosure": {
+    "AllowUse": "Allow bluetooth use",
+    "Disclosure": "The bluetooth is used to search and connect with other devices.",
+    "ToContinueUsing": "To continue using the FHWA bluetooth feature, please allow bluetooth permissions.",
+    "OpenSettings": "Open settings",
+  },
   "PINCreate": {
     "Message": {
       "CrossPatternValidation": "Um padrão de X foi detectado no seu PIN. Favor tentar novamente.",
@@ -224,7 +230,7 @@ const translation = {
     "EnterYourCurrentPIN": "Digite seu PIN atual."
   },
   "ScanBLE": {
-    "BluetoothText": "Turn On Bluetooth",
+    "BluetoothText": "Please turn on Bluetooth to continue.",
     "Text1": "Certifique-se de que o Bluetooth esteja ativado em ambos os dispositivos. Use o botão abaixo para procurar dispositivos disponíveis e enviar um convite para conexão.",
     "Toggle": "Alternar descoberta de Bluetooth",
     "ScanDevices": "Procurar dispositivos",

@@ -181,6 +181,12 @@ const translation = {
     "ToContinueUsing": "To continue using the FHWA bluetooth feature, please allow location permissions.",
     "OpenSettings": "Open settings",
   },
+  "BluetoothDisclosure": {
+    "AllowUse": "Allow bluetooth use",
+    "Disclosure": "The bluetooth is used to search and connect with other devices.",
+    "ToContinueUsing": "To continue using the FHWA bluetooth feature, please allow bluetooth permissions.",
+    "OpenSettings": "Open settings",
+  },
   "PINCreate": {
     "Message": {
       "CrossPatternValidation": "A pattern of cross was detected in your PIN. Please try again.",

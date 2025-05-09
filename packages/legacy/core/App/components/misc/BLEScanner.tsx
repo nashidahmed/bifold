@@ -2,24 +2,24 @@
 import { DidExchangeState } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { useIsFocused } from '@react-navigation/native'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  SafeAreaView,
-  View,
-  Text,
-  Pressable,
-  Switch,
-  FlatList,
-  StyleSheet,
-  NativeEventEmitter,
-  NativeModules,
   Alert,
   AppState,
   AppStateStatus,
+  FlatList,
+  NativeEventEmitter,
+  NativeModules,
+  Pressable,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
 } from 'react-native'
 import BleManager from 'react-native-ble-manager'
 
+import { SafeAreaView } from 'react-native-safe-area-context'
 import ButtonLoading from '../../components/animated/ButtonLoading'
 import ConnectionLoading from '../../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../../components/buttons/Button'
@@ -27,7 +27,7 @@ import { domain } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { useConnectionByOutOfBandId } from '../../hooks/connections'
 import { ScanProps } from '../../screens/Scan'
-import { Stacks, Screens } from '../../types/navigators'
+import { Screens, Stacks } from '../../types/navigators'
 import { createConnectionInvitation, stringToBytes } from '../../utils/helpers'
 import { handleInvitation } from '../../utils/invitation'
 import { testIdWithKey } from '../../utils/testable'
@@ -75,6 +75,7 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
   const [discoverable, setDiscoverable] = useState<boolean>()
   const [isBluetoothEnabled, setIsBluetoothEnabled] = useState<boolean>(false)
   const [appState, setAppState] = useState(AppState.currentState)
+  const [connectedDeviceId, setConnectedDeviceId] = useState<string>()
   const { ColorPallet, TextTheme } = useTheme()
   const bleManagerModule = NativeModules.BleManager
   const bleManagerEmitter = new NativeEventEmitter(bleManagerModule)
@@ -135,6 +136,18 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     }
   }
 
+  const disconnectDevice = (deviceId: string) => {
+    BleManager.disconnect(deviceId)
+      .then(() => {
+        // Success code
+        console.log('Disconnected')
+      })
+      .catch((error) => {
+        // Failure code
+        console.log(error)
+      })
+  }
+
   useEffect(() => {
     BleManager.start({ showAlert: false }).catch((error) => {
       console.error('BleManager initialization error:', error)
@@ -188,6 +201,7 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
   useEffect(() => {
     if (!isFocused) {
       stopAdvertising()
+      connectedDeviceId && disconnectDevice(connectedDeviceId)
     }
   }, [isFocused])
 
@@ -210,18 +224,6 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     return result.record.outOfBandInvitation.toUrl({ domain }) + '\n' // Add delimiter \n to detect completion in bluetooth send
   }
 
-  const disconnectDevice = (deviceId: string) => {
-    BleManager.disconnect(deviceId)
-      .then(() => {
-        // Success code
-        console.log('Disconnected')
-      })
-      .catch((error) => {
-        // Failure code
-        console.log(error)
-      })
-  }
-
   const sendInvitation = async (deviceId: string) => {
     const invitationURL = await createInvitation()
 
@@ -237,6 +239,7 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
 
   const connectToDevice = (deviceId: string) => {
     setIsConnecting(true)
+    setConnectedDeviceId(deviceId)
     BleManager.connect(deviceId)
       .then(async () => {
         console.log('Connected to', deviceId)
@@ -245,9 +248,6 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
       .then(async (peripheralInfo) => {
         console.log('Peripheral info:', peripheralInfo)
         return sendInvitation(deviceId)
-      })
-      .then(() => {
-        disconnectDevice(deviceId)
       })
       .catch((err: any) => {
         setIsConnecting(false)
@@ -295,7 +295,7 @@ const BLEScanner: React.FC<ScanProps> = ({ navigation, route }) => {
     )
   } else {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
         <View
           style={{
             flexDirection: 'row',
